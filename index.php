@@ -32,8 +32,12 @@
                 </div>
                 <?php 
                     if(isset($_GET['status'])){
-                        if(isset($_GET['status']) == 'failed'){
+                        if($_GET['status'] == 'failed'){
                             echo '<p class="info red mt"><i class="fi fi-rr-ban"></i> Username <strong>tidak terdaftar</strong> atau <strong>password salah</strong>, mohon periksa kembali!</p>';
+                        } else {
+                            session_start();
+                            session_destroy();
+                            echo '<p class="info blue mt"><i class="fi fi-rr-info"></i> Anda berhasil <strong>Log Out</strong>, Terima kasih. </p>';
                         }
                     }
                 ?>

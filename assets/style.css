@@ -86,13 +86,14 @@ i{
 }
 .formlogin>p{
     margin: 24px 5% !important;
+    text-align: center;
     line-height: 1.5;
     opacity: 0.8;
     font-size: 0.9em;
 }
 .icon{
     color: orange;
-    font-size: 1rem;
+    font-size: 1em;
     font-weight: 600;
     margin-right: 4px;
     display: inline-block;
@@ -103,4 +104,123 @@ i{
 }
 .mt{
     margin: 0 5% !important;
+}
+nav{
+    padding: 8px 24px;
+    box-shadow: 0 2px 4px 0 rgb(245,245,245);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
+.logoffbtn{
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+.logoffbtn:hover{
+    background: rgb(247,247,247);
+}
+.content-header{
+    width: 80%;
+    margin-left: 10%;
+    padding: 16px 0;
+}
+.content-header>a{
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgb(247,247,247);
+}
+.sumbox{
+    padding: 24px;
+    background: rgb(247,247,247);
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 24px;
+}
+.eachcontent{
+    width: 320px;
+    cursor: pointer;
+    padding: 16px;
+    background: white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.3s;
+}
+.eachcontent>div>p{
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin-top: 8px;
+}
+.eachcontent:hover{
+    box-shadow: 0 0 15px 0 rgb(230,230,230);
+    transform: translateY(-3px);
+}
+.progress{
+    background: rgb(255, 251, 243);
+    color: orange;
+}
+.pad{
+    border-radius: 4px;
+    text-align: center;
+    height: 100%;
+    padding: 4px 12px;
+}
+.done{
+    background: rgb(244, 255, 244);
+    color: limegreen;
+}
+.welcom{
+    margin: 12px 0 32px 0;
+}
+.welcom>p{
+    margin-top: 8px;
+}
+.trans{
+    display: inline-block;
+    transform: translateY(4px);
+    margin-right: 8px;
+}
+.fi-rr-caret-right{
+    transform: rotate(90deg)
+}
+.mini{
+    display: block;
+    font-size: 0.8rem;
+}
+.fi-rr-plus{
+    transform: translate(1px, 3px);
+}
+.addbtn{
+    cursor: pointer;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    padding: 12px;
+    border-radius: 50px;
+    background: orange;
+    color: white;
+    font-size: 1.2rem;
+    box-shadow: 3px 3px 15px 0 rgb(255, 199, 96);
+    border: 1px solid orange;
+    transition: all 0.3s;
+}
+.addbtn:hover{
+    box-shadow: 0 0 20px 0 orange;
+    transform: translateY(-3px);
+}
+.inline{
+    display: inline-block;
+    margin-top: 12px !important;
 }
