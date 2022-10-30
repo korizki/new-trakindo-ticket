@@ -1,0 +1,19 @@
+@media screen and (max-width: 600px){
+    body{
+        font-size: 14px;
+    }
+    .outer>img{
+        width: 120px;
+        margin-bottom: 24px;
+    }
+    .box{
+        width: 90%;
+        margin-left: 5%;
+    }
+    .mt{
+        text-align: center;
+    }
+    .formlogin>p{
+        margin: 24px 5%;
+    }
+}
