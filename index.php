@@ -15,20 +15,20 @@
         <img src="./assets/icon/trakindo.png" alt="logo trakindo" width=140>
         <div class="box">
             <h1 class="head"><span class=icon><i class="fi fi-rr-ticket"></i></span> Sistem Tiket Trakindo</h1>
-            <form action="./controllers/loginProcess.php" class="formlogin" method="post">
+            <form action="./controllers/loginProcess.php" class="formlogin" method="post" autocomplete="off">
                 <div class="formsec">
                     <p class="info blue"><i class="fi fi-rr-info"></i> Silahkan <strong>Log In</strong> menggunakan user terdaftar.</p>
                 </div>
                 <div class="formsec">
                     <label>Username</label>
-                    <input type="text" name="username" required autocomplete="off" placeholder="Masukkan username">
+                    <input type="text" id="username" name="username" autoComplete="off" required  placeholder="Masukkan username">
                 </div>
                 <div class="formsec">
                     <label>Password</label>
-                    <input type="password" name="password" required autocomplete="off" placeholder="Masukkan password">
+                    <input type="password" name="password" required autoComplete="off" placeholder="Masukkan password">
                 </div>
                 <div class="formsec">
-                    <button class="sbmt" type="submit"><i class="fi fi-rr-enter"></i> Log In</button>
+                    <button class="sbmt" type="submit" name="buttonlogin"><i class="fi fi-rr-enter"></i> Log In</button>
                 </div>
                 <?php 
                     if(isset($_GET['status'])){
@@ -41,5 +41,8 @@
             </form>
         </div>
     </div>
+    <script>
+        document.getElementById('username').focus()
+    </script>
 </body>
 </html>

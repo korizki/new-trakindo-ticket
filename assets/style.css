@@ -58,7 +58,6 @@ body{
     color:white !important;
     font-size: 1em;
     font-weight: 600;
-    margin-bottom: 12px;
     cursor: pointer;
     transition: all 0.3s;
 }
@@ -86,7 +85,7 @@ i{
     background: rgb(255, 244, 246);
 }
 .formlogin>p{
-    margin-top: 16px;
+    margin: 24px 5% !important;
     line-height: 1.5;
     opacity: 0.8;
     font-size: 0.9em;
