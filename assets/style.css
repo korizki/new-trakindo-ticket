@@ -1,3 +1,5 @@
+@import url('https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css');
+
 *{
     margin: 0;
     padding: 0;
@@ -77,7 +79,7 @@ i{
 }
 .blue{
     color: dodgerblue;
-    background: rgb(243, 249, 255);
+    background: rgb(245, 250, 255);
 }
 .red{
     color: crimson;
