@@ -93,7 +93,7 @@ i{
 }
 .icon{
     color: orange;
-    font-size: 1em;
+    font-size: 0.8em;
     font-weight: 600;
     margin-right: 4px;
     display: inline-block;
@@ -152,16 +152,16 @@ a{
     cursor: pointer;
     padding: 16px;
     background: white;
-    border-radius: 4px;
+    border-radius: 8px;
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     gap: 16px;
     transition: all 0.3s;
 }
 .eachcontent>div>p{
     font-size: 0.8em;
     opacity: 0.8;
-    margin-top: 8px;
+    margin-top: 4px;
 }
 .eachcontent:hover{
     box-shadow: 0 0 15px 0 rgb(230,230,230);
@@ -197,7 +197,7 @@ a{
 }
 .mini{
     display: block;
-    font-size: 0.8rem;
+    font-size: 0.4em;
 }
 .fi-rr-plus{
     transform: translate(1px, 3px);
@@ -211,8 +211,8 @@ a{
     border-radius: 50px;
     background: orange;
     color: white;
-    font-size: 1.2rem;
-    box-shadow: 3px 3px 15px 0 rgb(255, 199, 96);
+    font-size: 1.2em;
+    box-shadow: 0px 0px 15px 0 rgb(255, 199, 96);
     border: 1px solid orange;
     transition: all 0.3s;
 }
@@ -223,4 +223,37 @@ a{
 .inline{
     display: inline-block;
     margin-top: 12px !important;
+}
+.eachcontent>div{
+    flex: 1;
+}
+.review{
+    padding: 8px 16px;
+    width: 100%;
+    background: white;
+    color: inherit;
+    border: 2px solid #666f70;
+    border-radius: 50px;
+    margin-top: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.review:hover{
+    background: #666f70;
+    color: white;
+}
+.eachcontent>h1{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    transform: translateY(-2px);
+}
+.colwarn{
+    color: orange;
+}
+.colgreen{
+    color: limegreen;
+}
+.colblue{
+    color: dodgerblue;
 }

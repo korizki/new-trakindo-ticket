@@ -29,7 +29,7 @@
         <div class=content-header>
             <div class=welcom>
                 <h2><i class="fi fi-rr-comment-user trans"></i> Selamat Datang kembali, Administrator</h2>
-                <p style="opacity: 0.6">Berikut rangkuman seluruh tiket yang dibuat oleh PT. Madhani Talatah Nusantara</p>
+                <p style="opacity: 0.6">Berikut rangkuman seluruh tiket yang dibuat oleh PT. Madhani Talatah Nusantara.</p>
                 <p class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat membuat tiket baru dengan <strong>klik icon '+'</strong> pada kanan bawah halaman.</p>
             </div>
             <a>
@@ -38,24 +38,27 @@
             </a>
             <div class=sumbox>
                 <div class=eachcontent>
-                    <h1 class="progress pad">23 <span class="mini">Tiket</span></h1>
+                    <h1 class="colwarn pad">23 <span class="mini">Tiket</span></h1>
                     <div>
-                        <h4><i class="fi fi-rr-rotate-right"></i> Tiket On Progress</h4>
+                        <h4 class=colwarn><i class="fi fi-rr-rotate-right"></i> Tiket On Progress</h4>
                         <p>Total tiket berlangsung / on-progress</p>
+                        <button class=review>Lihat Tiket</button>
                     </div>
                 </div>
                 <div class=eachcontent>
-                    <h1 class="done pad">80 <span class="mini">Tiket</span></h1>
+                    <h1 class="colgreen pad">80 <span class="mini">Tiket</span></h1>
                     <div>
-                        <h4><i class="fi fi-rr-checkbox"></i> Tiket Selesai</h4>
+                        <h4 class=colgreen><i class="fi fi-rr-checkbox"></i> Tiket Selesai</h4>
                         <p>Total tiket dengan status selesai.</p>
+                        <button class=review>Lihat Tiket</button>
                     </div>
                 </div>
                 <div class=eachcontent>
-                    <h1 class="blue pad">100 <span class="mini">Tiket</span></h1>
+                    <h1 class="colblue pad">100 <span class="mini">Tiket</span></h1>
                     <div>
-                        <h4><i class="fi fi-rr-edit"></i> Tiket Dibuat</h4>
+                        <h4 class=colblue><i class="fi fi-rr-edit"></i> Tiket Dibuat</h4>
                         <p>Total semua tiket yang dibuat.</p>
+                        <button class=review>Lihat Tiket</button>
                     </div>
                 </div>
             </div>
