@@ -28,8 +28,8 @@
         </nav>
         <div class=content-header>
             <div class=welcom>
-                <h2><i class="fi fi-rr-comment-user trans"></i> Selamat Datang kembali, Administrator</h2>
-                <p style="opacity: 0.6">Berikut rangkuman seluruh tiket yang dibuat oleh PT. Madhani Talatah Nusantara.</p>
+                <h2><i class="fi fi-rr-comment-user trans"></i> Selamat Datang User</h2>
+                <p class="user">Anda berhasil Log In kembali <strong>Rizki Ramadhan</strong>, berikut rangkuman seluruh tiket yang dibuat oleh perusahaan anda, <strong>PT. Madhani Talatah Nusantara</strong>.</p>
                 <p class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat membuat tiket baru dengan <strong>klik icon '+'</strong> pada kanan bawah halaman.</p>
             </div>
             <a>
@@ -38,25 +38,25 @@
             </a>
             <div class=sumbox v-if=listData.length>
                 <div class=eachcontent>
-                    <h1 class="colwarn pad">{{ (listData.filter(item => item.status != 'Created' || item.status != 'Closed')).length }} <span class="mini">Tiket</span></h1>
+                    <h1 class="pad">{{ (listData.filter(item => item.status != 'Created' || item.status != 'Closed')).length }} <span class="mini">Tiket</span></h1>
                     <div>
-                        <h4 class=colwarn><i class="fi fi-rr-rotate-right"></i> Tiket On Progress</h4>
+                        <h3 class=><i class="fi fi-rr-rotate-right colwarn"></i> Tiket On Progress</h3>
                         <p>Total tiket berlangsung / on-progress</p>
                         <button class=review>Lihat Tiket</button>
                     </div>
                 </div>
                 <div class=eachcontent>
-                    <h1 class="colgreen pad">{{ (listData.filter(item => item.status == 'Closed')).length }} <span class="mini">Tiket</span></h1>
+                    <h1 class=" pad">{{ (listData.filter(item => item.status == 'Closed')).length }} <span class="mini">Tiket</span></h1>
                     <div>
-                        <h4 class=colgreen><i class="fi fi-rr-checkbox"></i> Tiket Selesai</h4>
+                        <h3 class=><i class="fi fi-rr-checkbox colgreen"></i> Tiket Selesai</h3>
                         <p>Total tiket dengan status selesai.</p>
                         <button class=review>Lihat Tiket</button>
                     </div>
                 </div>
                 <div class=eachcontent>
-                    <h1 class="colblue pad">{{ (listData.filter(item => item.status == 'Created')).length }} <span class="mini">Tiket</span></h1>
+                    <h1 class=" pad">{{ (listData.filter(item => item.status == 'Created')).length }} <span class="mini">Tiket</span></h1>
                     <div>
-                        <h4 class=colblue><i class="fi fi-rr-edit"></i> Tiket Dibuat</h4>
+                        <h3 class=><i class="fi fi-rr-edit colblue"></i> Tiket Dibuat</h3>
                         <p>Total semua tiket yang dibuat.</p>
                         <button class=review>Lihat Tiket</button>
                     </div>
@@ -68,7 +68,37 @@
             </a>
         </div>
         <div>
-            <button title="Buat tiket baru" class=addbtn><i class="fi fi-rr-plus"></i></button>
+            <button @click="isAddData = true" title="Buat tiket baru" class=addbtn><i class="fi fi-rr-plus"></i></button>
+        </div>
+        <div class="addbox" v-if=isAddData>
+            <div class=conbox>
+                <h2>
+                    <span><i class="fi fi-rr-envelope-plus"></i> Buat Tiket Baru</span>
+                    <a href="#" @click="isAddData = false"><i class="fi fi-rr-cross-small"></i></a>
+                </h2>
+                <form action="" class=form>
+                    <div class=formsec>
+                        <label for="sn">Serial Number Unit</label>
+                        <input type="text" name="sn" required placeholder="Masukkan Serial Number Unit">
+                    </div>
+                    <div class=formsec>
+                        <label for="desc">Deskripsi Pekerjaan</label>
+                        <textarea name="desc"  rows="3" required placeholder="Masukkan Pekerjaan yang diinginkan"></textarea>
+                    </div>
+                    <div class=formsec>
+                        <label for="email">Email Requestor</label>
+                        <input type="email" name="email" placeholder="Masukkan Email Requestor" required>
+                    </div>
+                    <div class=formsec>
+                        <label for="phone">Nomor Handphone Requestor</label>
+                        <input type="tel" name="phone" required placeholder="Masukkan Nomor Telepon Requestor">
+                    </div>
+                    <div class="formsec btnfield">
+                        <a href="#" @click="isAddData = false">Batal</a>
+                        <button class="sbmt" type="submit">Submit Request</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     <!-- import CDN Vue.js dan jquery.js -->
@@ -82,13 +112,16 @@
             data() {
                 return {
                     message: 'Hello Vue!',
-                    listData: ['a'],
+                    listData: [],
+                    isAddData: false,
                 }
             },
             methods: {
                 logOutUser(){
                     let confirm = window.confirm('Anda yakin ingin keluar?')
-                    window.location.href = confirm && "../index.php?status=logout"
+                    if(confirm){
+                        window.location.href = "../index.php?status=logout"
+                    }
                 },
                 loadData(data){
                     this.listData = JSON.parse(data)

@@ -39,7 +39,8 @@ body{
     display: flex;
     flex-direction: column;
 }
-.formsec>input, .formsec>button{
+.formsec>input, .formsec>textarea, .formsec>button{
+    resize: none;
     font-size: 1em;
     padding: 0.7em 0.9em;
     color: inherit;
@@ -47,7 +48,7 @@ body{
     border: 1px solid #ddd;
     border-radius: 6px;
 }
-.formsec>input:focus{
+.formsec>input:focus, .formsec>textarea:focus{
     outline: 2px solid orange;
 }
 .formlogin{
@@ -72,7 +73,7 @@ i{
 }
 .info{
     text-align: left;
-    font-size: 0.8em;
+    font-size: 0.9em;
     padding: 8px 8px;
     border-radius: 4px;
 }
@@ -182,10 +183,7 @@ a{
     color: limegreen;
 }
 .welcom{
-    margin: 12px 0 32px 0;
-}
-.welcom>p{
-    margin-top: 8px;
+    margin: 0px 0 24px 0;
 }
 .trans{
     display: inline-block;
@@ -257,4 +255,67 @@ a{
 }
 .colblue{
     color: dodgerblue;
+}
+.addbox::-webkit-scrollbar{
+    display: none;
+}
+.addbox{
+    position: fixed;
+    overflow: auto;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(57, 57, 57, 0.8);
+}
+.conbox{
+    width: 50%;
+    margin: 3% 25% 3% 25%;
+    background: white;
+    border-radius: 12px;
+    animation: turn 0.5s ease;
+}
+.user{
+    margin: 8px 0;
+    opacity: 0.8
+}
+@keyframes turn{
+    from{
+        transform: translateY(-200px);
+    }
+    to{
+        transform: translateY(0);
+    }
+}
+.conbox>h2{
+    padding: 0.8em 1em;
+    background: rgb(245,245,245);
+    display: flex;
+    border-radius: 8px 8px 0 0;
+    align-items: center;
+    justify-content: space-between;
+}
+.form{
+    padding: 15px 15px 24px 15px;
+}
+::placeholder{
+    color: rgb(220,220,220)
+}
+.btnfield{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 24px;
+}
+
+.btnfield>a{
+    display: inline-block;
+    font-size: 1em;
+    padding: 0.7em 0.9em;
+    border-radius: 4px;
+    margin-top: 6px;
+    transition: all 0.3s;
+}
+.btnfield>a:hover{
+    background: rgb(240,240,240);
 }

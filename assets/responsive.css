@@ -9,6 +9,9 @@
     nav{
         padding: 8px 12px;
     }
+    .user{
+        margin-bottom: 16px;
+    }
     .box{
         width: 94%;
         margin-left: 3%;
@@ -31,13 +34,11 @@
         bottom: 20px;
         right: 20px;
     }
-    .welcom>h2{
-        font-size: 1.2em;
-    }
-    .welcom>p{
-        font-size: 0.8em;
-    }
     .inline{
         text-align: center;
+    }
+    .conbox{
+        width: 90%;
+        margin: 5%;
     }
 }
