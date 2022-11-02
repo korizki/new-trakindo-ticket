@@ -3,8 +3,11 @@
         font-size: 14px;
     }
     .outer>img{
-        width: 120px;
+        width: 100px;
         margin-bottom: 24px;
+    }
+    nav{
+        padding: 8px 12px;
     }
     .box{
         width: 94%;
@@ -15,5 +18,26 @@
     }
     .formlogin>p{
         margin: 24px 5%;
+    }
+    .content-header{
+        width: 90%;
+        margin-left: 5%;
+    }
+    .sumbox{
+        flex-direction: column;
+        align-items: center;
+    }
+    .addbtn{
+        bottom: 20px;
+        right: 20px;
+    }
+    .welcom>h2{
+        font-size: 1.2em;
+    }
+    .welcom>p{
+        font-size: 0.8em;
+    }
+    .inline{
+        text-align: center;
     }
 }

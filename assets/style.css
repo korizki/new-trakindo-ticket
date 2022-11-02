@@ -154,7 +154,7 @@ a{
     background: white;
     border-radius: 8px;
     display: flex;
-    /* align-items: center; */
+    align-items: center;
     gap: 16px;
     transition: all 0.3s;
 }
@@ -204,7 +204,7 @@ a{
 }
 .addbtn{
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     bottom: 30px;
     right: 30px;
     padding: 12px;
@@ -232,6 +232,7 @@ a{
     width: 100%;
     background: white;
     color: inherit;
+    font-size: 0.8em;
     border: 2px solid #666f70;
     border-radius: 50px;
     margin-top: 12px;

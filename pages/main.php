@@ -36,9 +36,9 @@
                 <h2><i class="fi fi-rr-document-signed"></i> Rangkuman Semua Tiket</h2>
                 <span href="#"><i class="fi fi-rr-caret-right"></i></span>
             </a>
-            <div class=sumbox>
+            <div class=sumbox v-if=listData.length>
                 <div class=eachcontent>
-                    <h1 class="colwarn pad">23 <span class="mini">Tiket</span></h1>
+                    <h1 class="colwarn pad">{{ (listData.filter(item => item.status != 'Created' || item.status != 'Closed')).length }} <span class="mini">Tiket</span></h1>
                     <div>
                         <h4 class=colwarn><i class="fi fi-rr-rotate-right"></i> Tiket On Progress</h4>
                         <p>Total tiket berlangsung / on-progress</p>
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class=eachcontent>
-                    <h1 class="colgreen pad">80 <span class="mini">Tiket</span></h1>
+                    <h1 class="colgreen pad">{{ (listData.filter(item => item.status == 'Closed')).length }} <span class="mini">Tiket</span></h1>
                     <div>
                         <h4 class=colgreen><i class="fi fi-rr-checkbox"></i> Tiket Selesai</h4>
                         <p>Total tiket dengan status selesai.</p>
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div class=eachcontent>
-                    <h1 class="colblue pad">100 <span class="mini">Tiket</span></h1>
+                    <h1 class="colblue pad">{{ (listData.filter(item => item.status == 'Created')).length }} <span class="mini">Tiket</span></h1>
                     <div>
                         <h4 class=colblue><i class="fi fi-rr-edit"></i> Tiket Dibuat</h4>
                         <p>Total semua tiket yang dibuat.</p>
@@ -81,14 +81,27 @@
         createApp({
             data() {
                 return {
-                    message: 'Hello Vue!'
+                    message: 'Hello Vue!',
+                    listData: ['a'],
                 }
             },
             methods: {
                 logOutUser(){
                     let confirm = window.confirm('Anda yakin ingin keluar?')
                     window.location.href = confirm && "../index.php?status=logout"
+                },
+                loadData(data){
+                    this.listData = JSON.parse(data)
                 }
+            },
+            mounted(){
+                $.ajax({
+                    url: '../controllers/getSummary.php',
+                    method: 'get',
+                    success: (data) => {
+                        this.loadData(data)
+                    }
+                })
             }
         }).mount('#app')
     </script>
