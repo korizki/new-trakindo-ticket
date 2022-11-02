@@ -320,3 +320,86 @@ a{
 .btnfield>a:hover{
     background: rgb(240,240,240);
 }
+.lastticket{
+    display: flex;
+    gap: 24px 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
+.singleticket{
+    width: 330px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px 0 rgb(240,240,240);
+    outline: 1px solid rgb(245,245,245);
+    transition: all 0.3s;
+}
+.singleticket>h3{
+    padding: 12px 24px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.rightinfo{
+    display: flex;
+    flex-direction: column;
+}
+.rightinfo>span:nth-child(2){
+    font-size: 0.8em;
+    font-weight: 400;
+    opacity: 0.6;
+    margin-top: 2px;
+}
+.singleticket:hover{
+    cursor: pointer;
+    transform: translateY(-3px);
+    box-shadow: 2px 2px 15px 0 rgb(240,240,240);
+    outline: 2px solid orange;
+}
+.singleticket>h3>i{
+    font-size: 1.8em;
+    transform: translateY(4px);
+    color: orange;
+}
+.detrequestor{
+    padding: 12px 24px;
+    background: rgb(250,250,250);
+}
+.detrequestor>h4{
+    margin-top: 8px;
+}
+.detrequestor>h4:first-child{
+    margin-top: 0;
+}
+.badgee{
+    padding: 4px 8px;
+    font-size: 0.8em;
+    border-radius: 4px;
+}
+.Closed{
+    color: limegreen;
+    background: rgb(242, 255, 242);
+}
+.Waiting{
+    color: orange;
+    background: rgb(255, 251, 242);
+}
+.Created{
+    color: dodgerblue;
+    background: rgb(242, 249, 255);
+}
+.detrequestor>button{
+    cursor: pointer;
+    padding: 8px 16px;
+    text-align: center;
+    margin: 16px 0 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    transition: all 0.3s;
+}
+.detrequestor>button:hover{
+    background: #666f70;
+    color: white;
+}

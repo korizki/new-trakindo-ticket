@@ -66,6 +66,22 @@
                 <h2><i class="fi fi-rr-ticket trans"></i> Tiket Terakhir Dibuat</h2>
                 <span href="#"><i class="fi fi-rr-caret-right"></i></span>
             </a>
+            <div class=lastticket>
+                <div class=singleticket v-for="ticket in lastCreatedTicket" :key="ticket.id">
+                    <h3>
+                        <i class="fi fi-rr-ticket"></i>
+                        <span class=rightinfo>
+                            <span> Ticket Id. {{ticket.id}} - {{ticket.sn_unit}}</span>
+                            <span>Dibuat pada {{(new Date(ticket.req_date)).toLocaleDateString('id-ID')}}</span>
+                        </span>
+                    </h3>
+                    <div class=detrequestor>
+                        <h4><i class="fi fi-rr-info"></i> Status : <span class="badgee" :class="ticket.status">{{ticket.status}}</span></h4>
+                        <h4><i class="fi fi-rr-portrait"></i> {{ticket.requestor}} (Requestor) </h4>
+                        <button>Detail Ticket</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div>
             <button @click="isAddData = true" title="Buat tiket baru" class=addbtn><i class="fi fi-rr-plus"></i></button>
@@ -135,6 +151,11 @@
                             console.log(data)
                         }
                     })
+                }
+            },
+            computed: {
+                lastCreatedTicket(){
+                    return this.listData.slice(0,5)
                 }
             },
             mounted(){
