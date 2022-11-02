@@ -13,10 +13,10 @@
 <body>
     <!-- validasi sesi user yang log in -->
     <?php 
-        // session_start();
-        // if(isset($_SESSION['logged_user']) == null){
-        //     header("Location: ../index.php");
-        // }
+        session_start();
+        if(isset($_SESSION['logged_user']) == null){
+            header("Location: ../index.php");
+        }
     ?>
     <div id="app">
         <nav>
@@ -29,7 +29,7 @@
         <div class=content-header>
             <div class=welcom>
                 <h2><i class="fi fi-rr-comment-user trans"></i> Selamat Datang User</h2>
-                <p class="user">Anda berhasil Log In kembali <strong>Rizki Ramadhan</strong>, berikut rangkuman seluruh tiket yang dibuat oleh perusahaan anda, <strong>PT. Madhani Talatah Nusantara</strong>.</p>
+                <p class="user">Anda berhasil Log In kembali <strong><?php echo $_SESSION['logged_user']; ?></strong>, berikut rangkuman seluruh tiket yang dibuat oleh perusahaan anda, <strong><?php echo $_SESSION['logged_user_comp']; ?></strong>.</p>
                 <p class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat membuat tiket baru dengan <strong>klik icon '+'</strong> pada kanan bawah halaman.</p>
             </div>
             <a>
@@ -76,7 +76,7 @@
                     <span><i class="fi fi-rr-envelope-plus"></i> Buat Tiket Baru</span>
                     <a href="#" @click="isAddData = false"><i class="fi fi-rr-cross-small"></i></a>
                 </h2>
-                <form action="" class=form>
+                <form id="formadd" class="form" @submit.prevent="submitNewRequest">
                     <div class=formsec>
                         <label for="sn">Serial Number Unit</label>
                         <input type="text" name="sn" required placeholder="Masukkan Serial Number Unit">
@@ -95,7 +95,7 @@
                     </div>
                     <div class="formsec btnfield">
                         <a href="#" @click="isAddData = false">Batal</a>
-                        <button class="sbmt" type="submit">Submit Request</button>
+                        <button class="sbmt" type="submit" >Submit Request</button>
                     </div>
                 </form>
             </div>
@@ -125,6 +125,16 @@
                 },
                 loadData(data){
                     this.listData = JSON.parse(data)
+                },
+                submitNewRequest(){
+                    $.ajax({
+                        url: '../controllers/addNewRequest.php',
+                        method: 'post',
+                        data: $('#formadd').serialize(),
+                        success: (data) => {
+                            console.log(data)
+                        }
+                    })
                 }
             },
             mounted(){

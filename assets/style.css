@@ -277,7 +277,8 @@ a{
 }
 .user{
     margin: 8px 0;
-    opacity: 0.8
+    opacity: 0.8;
+    line-height: 1.5;
 }
 @keyframes turn{
     from{
