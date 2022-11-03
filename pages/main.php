@@ -19,6 +19,10 @@
         } else {
             $user = $_SESSION['logged_user'];
             $comp = $_SESSION['logged_user_comp'];
+            echo "<script>
+                localStorage.setItem('user', '$user')
+                localStorage.setItem('company', '$comp')
+            </script>";
         }
 
     ?>
@@ -33,7 +37,7 @@
         <div class=content-header>
             <div class=welcom>
                 <h2><i class="fi fi-rr-comment-user trans"></i> Selamat Datang User</h2>
-                <p class="user">Anda berhasil Log In kembali <strong><?php echo $user;  ?></strong>, berikut rangkuman seluruh tiket yang dibuat oleh perusahaan anda, <strong><?php echo $comp; ?></strong>.</p>
+                <p class="user">Anda berhasil Log In kembali <strong>{{ user }}</strong>, berikut rangkuman seluruh tiket yang dibuat oleh perusahaan anda, <strong>{{ company }}</strong>.</p>
                 <p class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat membuat tiket baru dengan <strong>klik icon '+'</strong> pada kanan bawah halaman.</p>
             </div>
             <a>
@@ -134,6 +138,8 @@
                     message: 'Hello Vue!',
                     listData: [],
                     isAddData: false,
+                    user: '',
+                    company: '',
                 }
             },
             methods: {
@@ -168,6 +174,8 @@
                     method: 'get',
                     success: (data) => {
                         this.loadData(data)
+                        this.user = localStorage.getItem('user')
+                        this.company = localStorage.getItem('company')
                     }
                 })
             }
