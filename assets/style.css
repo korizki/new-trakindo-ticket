@@ -220,7 +220,6 @@ a{
 }
 .inline{
     display: inline-block;
-    margin-top: 12px !important;
 }
 .eachcontent>div{
     flex: 1;
@@ -402,4 +401,24 @@ a{
 .detrequestor>button:hover{
     background: #666f70;
     color: white;
+}
+.notifsuccess{
+    padding: 12px 16px;
+    width: 50%;
+    margin-left: 25%;
+    color: limegreen;
+    background: rgb(232, 255, 232);
+    border-radius: 8px;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+a{
+    cursor: pointer;
+    text-decoration: none;
+}
+.notifsuccess>span{
+    flex: 1;
+    text-align: center;
 }

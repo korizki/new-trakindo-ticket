@@ -23,8 +23,8 @@
         margin: 24px 5%;
     }
     .content-header{
-        width: 90%;
-        margin-left: 5%;
+        width: 86%;
+        margin-left: 7%;
     }
     .sumbox{
         flex-direction: column;
@@ -56,5 +56,18 @@
     }
     .detrequestor>button{
         margin-top: 12px;
+    }
+    .notifsuccess{
+        width: 86%;
+        margin-left: 7%;
+        padding: 8px 12px;
+        border-radius: 4px;
+    }
+    .notifsuccess>span{
+        line-height: 1.5;
+        font-size: 0.9em;
+    }
+    .notifsuccess>a{
+        display: none;
     }
 }

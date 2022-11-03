@@ -34,6 +34,10 @@
             </div>
             <a title="Log Out User" class="logoffbtn" @click="logOutUser"><i class="fi fi-rr-sign-out-alt"></i> <span class="remarklogout">Keluar</span></a>
         </nav>
+        <p class=notifsuccess v-if="showNotifSuccess">
+            <span><i class="fi fi-rr-badge-check"></i> <strong>Request Tiket berhasil</strong>, silahkan tunggu Feedback / Balasan tiket. Terima kasih.</span>
+            <a @click="showNotifSuccess = false"><i class="fi fi-rr-cross-small"></i></a>
+        </p>
         <div class=content-header>
             <div class=welcom>
                 <h2><i class="fi fi-rr-comment-user trans"></i> Selamat Datang User</h2>
@@ -140,6 +144,7 @@
                     isAddData: false,
                     user: '',
                     company: '',
+                    showNotifSuccess: false,
                 }
             },
             methods: {
@@ -152,13 +157,33 @@
                 loadData(data){
                     this.listData = JSON.parse(data)
                 },
+                getDataFromAPI(){
+                    $.ajax({
+                        url: '../controllers/getSummary.php',
+                        method: 'get',
+                        success: (data) => {
+                            this.loadData(data)
+                            this.user = localStorage.getItem('user')
+                            this.company = localStorage.getItem('company')
+                        }
+                    })
+                },
                 submitNewRequest(){
                     $.ajax({
                         url: '../controllers/addNewRequest.php',
                         method: 'post',
                         data: $('#formadd').serialize(),
                         success: (data) => {
-                            console.log(data)
+                            // refresh data pada main page
+                            this.getDataFromAPI()
+                            let response = JSON.parse(data)
+                            if(response.status == 'Success'){
+                                this.isAddData = false
+                                this.showNotifSuccess = true;
+                                setTimeout(() => {
+                                    this.showNotifSuccess = false;
+                                },3000)
+                            }
                         }
                     })
                 }
@@ -169,15 +194,7 @@
                 }
             },
             mounted(){
-                $.ajax({
-                    url: '../controllers/getSummary.php',
-                    method: 'get',
-                    success: (data) => {
-                        this.loadData(data)
-                        this.user = localStorage.getItem('user')
-                        this.company = localStorage.getItem('company')
-                    }
-                })
+                this.getDataFromAPI()
             }
         }).mount('#app')
     </script>
