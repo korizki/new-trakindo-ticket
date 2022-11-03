@@ -48,7 +48,7 @@
                 <h2><i class="fi fi-rr-document-signed"></i> Rangkuman Semua Tiket</h2>
                 <span href="#"><i class="fi fi-rr-caret-right"></i></span>
             </a>
-            <div class=sumbox v-if=listData.length>
+            <div class=sumbox>
                 <div class=eachcontent>
                     <h1 class="pad">{{ (listData.filter(item => item.status != 'Created' || item.status != 'Closed')).length }} <span class="mini">Tiket</span></h1>
                     <div>
@@ -107,19 +107,19 @@
                 <form id="formadd" class="form" @submit.prevent="submitNewRequest">
                     <div class=formsec>
                         <label for="sn">Serial Number Unit</label>
-                        <input type="text" name="sn" required placeholder="Masukkan Serial Number Unit">
+                        <input type="text" name="sn" required placeholder="Contoh: EX-001">
                     </div>
                     <div class=formsec>
                         <label for="desc">Deskripsi Pekerjaan</label>
-                        <textarea name="desc"  rows="3" required placeholder="Masukkan Pekerjaan yang diinginkan"></textarea>
+                        <textarea name="desc"  rows="3" required placeholder="Contoh: Penggantian Radiator "></textarea>
                     </div>
                     <div class=formsec>
                         <label for="email">Email Requestor</label>
-                        <input type="email" name="email" placeholder="Masukkan Email Requestor" required>
+                        <input type="email" name="email" placeholder="Contoh: admin@gmail.com" required>
                     </div>
                     <div class=formsec>
                         <label for="phone">Nomor Handphone Requestor</label>
-                        <input type="tel" name="phone" required placeholder="Masukkan Nomor Telepon Requestor">
+                        <input type="tel" name="phone" required placeholder="Contoh: 08123456789">
                     </div>
                     <div class="formsec btnfield">
                         <a href="#" @click="isAddData = false">Batal</a>
