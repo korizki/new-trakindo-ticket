@@ -16,7 +16,11 @@
         session_start();
         if(isset($_SESSION['logged_user']) == null){
             header("Location: ../index.php");
+        } else {
+            $user = $_SESSION['logged_user'];
+            $comp = $_SESSION['logged_user_comp'];
         }
+
     ?>
     <div id="app">
         <nav>
@@ -29,7 +33,7 @@
         <div class=content-header>
             <div class=welcom>
                 <h2><i class="fi fi-rr-comment-user trans"></i> Selamat Datang User</h2>
-                <p class="user">Anda berhasil Log In kembali <strong><?php echo $_SESSION['logged_user']; ?></strong>, berikut rangkuman seluruh tiket yang dibuat oleh perusahaan anda, <strong><?php echo $_SESSION['logged_user_comp']; ?></strong>.</p>
+                <p class="user">Anda berhasil Log In kembali <strong><?php echo $user;  ?></strong>, berikut rangkuman seluruh tiket yang dibuat oleh perusahaan anda, <strong><?php echo $comp; ?></strong>.</p>
                 <p class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat membuat tiket baru dengan <strong>klik icon '+'</strong> pada kanan bawah halaman.</p>
             </div>
             <a>
