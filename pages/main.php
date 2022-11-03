@@ -128,6 +128,63 @@
                 </form>
             </div>
         </div>
+        <div class="addbox detailout" v-if=showDetail>
+            <div class="conbox detail">
+                <h2>
+                    <span><i class="fi fi-rr-ticket"></i> Detail Tiket</span>
+                    <a href="#" @click="showDetail = false"><i class="fi fi-rr-cross-small"></i></a>
+                </h2>
+                <div class=detsect>
+                    <h3>
+                        <span><i class="fi fi-rr-info"></i> Informasi Tiket</span>
+                        <span class=minif><i class="fi fi-rr-calendar-clock"></i> Dibuat pada {{ ticketDetail.req_date }}</span>
+                    </h3>
+                    <div class=contdet>
+                        <div>
+                            <p>Ticket ID</p>
+                            <h4>{{ ticketDetail.id }}</h4>
+                        </div>
+                        <div>
+                            <p>Serial Number Unit</p>
+                            <h4>{{ ticketDetail.sn_unit }}</h4>
+                        </div>
+                        <div>
+                            <p>Status Ticket</p>
+                            <h4>{{ ticketDetail.status }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class=detsect>
+                    <h3><span><i class="fi fi-rr-portrait"></i> Informasi Requestor</span></h3>
+                    <div class=contdet>
+                        <div>
+                            <p>Nomor Handphone</p>
+                            <h4>{{ ticketDetail.phone }}</h4>
+                        </div>
+                        <div>
+                            <p>Email</p>
+                            <h4>{{ ticketDetail.email }}</h4>
+                        </div>
+                        <div>
+                            <p>Username</p>
+                            <h4>{{ ticketDetail.requestor }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class=detsect>
+                    <h3><span><i class="fi fi-rr-settings"></i> Informasi Pekerjaan</span></h3>
+                    <div class=contdet>
+                        <div class=pesan>
+                            <p>Deskripsi / Detail</p>
+                            <h4>{{ ticketDetail.job }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="detsect">
+                    <button @click="showDetail = false" class=btntutup>Tutup</button>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- import CDN Vue.js dan jquery.js -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -145,6 +202,8 @@
                     user: '',
                     company: '',
                     showNotifSuccess: false,
+                    ticketDetail: '',
+                    showDetail: true,
                 }
             },
             methods: {
@@ -156,6 +215,8 @@
                 },
                 loadData(data){
                     this.listData = JSON.parse(data)
+                    this.ticketDetail = this.listData[0]
+                    console.log(this.ticketDetail)
                 },
                 getDataFromAPI(){
                     $.ajax({
