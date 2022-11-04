@@ -1,0 +1,8 @@
+---
+deployment:
+  tasks:
+  - export DEPLOYPATH=/home/bukitasa/public_html/new-trakindo-ticket/
+  - /bin/cp index.php $DEPLOYPATH
+  - /bin/cp -R assets $DEPLOYPATH
+  - /bin/cp -R controllers $DEPLOYPATH
+  - /bin/cp -R pages $DEPLOYPATH
