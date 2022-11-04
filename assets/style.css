@@ -424,7 +424,7 @@ a{
     text-align: center;
 }
 .detail{
-    border: 3px solid rgb(255, 191, 73);
+    outline: 2px solid rgb(255, 191, 73);
 }
 .detail>h2{
     background: rgb(255, 191, 73);
