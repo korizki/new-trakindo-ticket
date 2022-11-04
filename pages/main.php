@@ -90,7 +90,7 @@
                     <div class=detrequestor>
                         <h4><i class="fi fi-rr-info"></i> Status : <span class="badgee" :class="ticket.status">{{ticket.status}}</span></h4>
                         <h4><i class="fi fi-rr-portrait"></i> {{ticket.requestor}} (Requestor) </h4>
-                        <button>Detail Ticket</button>
+                        <button @click="showDetailTicket(ticket)">Detail Ticket</button>
                     </div>
                 </div>
             </div>
@@ -203,7 +203,7 @@
                     company: '',
                     showNotifSuccess: false,
                     ticketDetail: '',
-                    showDetail: true,
+                    showDetail: false,
                 }
             },
             methods: {
@@ -215,7 +215,6 @@
                 },
                 loadData(data){
                     this.listData = JSON.parse(data)
-                    this.ticketDetail = this.listData[0]
                     console.log(this.ticketDetail)
                 },
                 getDataFromAPI(){
@@ -228,6 +227,10 @@
                             this.company = localStorage.getItem('company')
                         }
                     })
+                },
+                showDetailTicket(ticket){
+                    this.ticketDetail = ticket
+                    this.showDetail = true
                 },
                 submitNewRequest(){
                     $.ajax({

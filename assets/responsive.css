@@ -70,5 +70,23 @@
     .notifsuccess>a{
         display: none;
     }
-    
+    .minif{
+        font-size: 0.6em;
+    }
+    .contdet{
+        flex-direction: column;
+        gap: 0;
+    }
+    .contdet>div{
+        width: 100%;
+        padding: 8px 0 0 0;
+    }
+    .contdet>div>h4{
+        margin-top: 0;
+    }
+    .btntutup{
+        padding: 8px;
+        border-radius: 4px;
+        margin-top: 8px;
+    }
 }

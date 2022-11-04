@@ -396,6 +396,7 @@ a{
     border: 1px solid #ddd;
     border-radius: 4px;
     width: 100%;
+    font-size: 0.9em;
     transition: all 0.3s;
 }
 .detrequestor>button:hover{
@@ -423,10 +424,10 @@ a{
     text-align: center;
 }
 .detail{
-    border: 3px solid orange;
+    border: 3px solid rgb(255, 191, 73);
 }
 .detail>h2{
-    background: orange;
+    background: rgb(255, 191, 73);
     color: white;
 }
 .detsect{
@@ -480,9 +481,9 @@ a{
     width: 100%;
     padding: 12px;
     text-align: center;
-    background: orange;
+    background: rgb(255, 191, 73);
     color: white;
-    border: 1px solid orange;
+    border: 1px solid rgb(255, 191, 73);
     margin-bottom: 16px;
     border-radius: 8px;
     cursor: pointer;
