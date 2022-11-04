@@ -29,16 +29,18 @@
     <div id="app">
         <nav>
             <a href="./main.php"><img src="../assets/icon/trakindo.png" alt="icon-trakindo" width=140></a>
-            <div>
-
-            </div>
+            
             <a title="Log Out User" class="logoffbtn" @click="logOutUser"><i class="fi fi-rr-sign-out-alt"></i> <span class="remarklogout">Keluar</span></a>
         </nav>
         <p class=notifsuccess v-if="showNotifSuccess">
             <span><i class="fi fi-rr-badge-check"></i> <strong>Request Tiket berhasil</strong>, silahkan tunggu Feedback / Balasan tiket. Terima kasih.</span>
             <a @click="showNotifSuccess = false"><i class="fi fi-rr-cross-small"></i></a>
         </p>
-        <div class=content-header>
+        <div class=topnav>
+            <a :class="{activetab: activeTab == 1}" @click="activeTab = 1"><i class="fi fi-rr-stats" v-if="activeTab == 1"></i> Summary</a>
+            <a :class="{activetab: activeTab == 2}" @click="activeTab = 2"><i class="fi-rr-document-signed" v-if="activeTab == 2"></i> Report</a>
+        </div>
+        <div class=content-header v-if="activeTab == 1">
             <div class=welcom>
                 <h2><i class="fi fi-rr-comment-user trans"></i> Selamat Datang User</h2>
                 <p class="user">Anda berhasil Log In kembali <strong>{{ user }}</strong>, berikut rangkuman seluruh tiket yang dibuat oleh perusahaan anda, <strong>{{ company }}</strong>.</p>
@@ -46,9 +48,17 @@
             </div>
             <a>
                 <h2><i class="fi fi-rr-document-signed"></i> Rangkuman Semua Tiket</h2>
-                <span><i class="fi fi-rr-caret-right"></i></span>
+                <span>Jumlah semua tiket {{ listData.length }} tiket.</span>
             </a>
             <div class=sumbox>
+                <div class=eachcontent>
+                    <h1 class=" pad">{{ (listData.filter(item => item.status == 'Created')).length }} <span class="mini">Tiket</span></h1>
+                    <div>
+                        <h3 class=><i class="fi fi-rr-edit colblue"></i> Tiket Baru Dibuat</h3>
+                        <p>Total semua tiket yang dibuat.</p>
+                        <button class=review>Lihat Tiket</button>
+                    </div>
+                </div>
                 <div class=eachcontent>
                     <h1 class="pad">{{ (listData.filter(item => item.status != 'Created' || item.status != 'Closed')).length }} <span class="mini">Tiket</span></h1>
                     <div>
@@ -65,18 +75,10 @@
                         <button class=review>Lihat Tiket</button>
                     </div>
                 </div>
-                <div class=eachcontent>
-                    <h1 class=" pad">{{ (listData.filter(item => item.status == 'Created')).length }} <span class="mini">Tiket</span></h1>
-                    <div>
-                        <h3 class=><i class="fi fi-rr-edit colblue"></i> Tiket Dibuat</h3>
-                        <p>Total semua tiket yang dibuat.</p>
-                        <button class=review>Lihat Tiket</button>
-                    </div>
-                </div>
             </div>
             <a>
                 <h2><i class="fi fi-rr-ticket trans"></i> Tiket Terakhir Dibuat</h2>
-                <span><i class="fi fi-rr-caret-right"></i></span>
+                <span>Menampilkan 5 tiket yang terakhir dibuat.</span>
             </a>
             <div class=lastticket>
                 <div class=singleticket v-for="ticket in lastCreatedTicket" :key="ticket.id">
@@ -204,6 +206,7 @@
                     showNotifSuccess: false,
                     ticketDetail: '',
                     showDetail: false,
+                    activeTab: 1,
                 }
             },
             methods: {

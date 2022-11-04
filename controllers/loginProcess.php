@@ -17,6 +17,7 @@
             $_SESSION['logged_user'] = $row['nama_user'];
             $_SESSION['user'] = $username;
             $_SESSION['logged_user_comp'] = $row['company'];
+            $_SESSION['user_type'] = $row['type'];
             $_SESSION['logged_user_type'] = $row['type'];
             // arahkan ke main page
             header("Location: ../pages/main.php");

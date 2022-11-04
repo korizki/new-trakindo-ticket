@@ -89,4 +89,15 @@
         border-radius: 4px;
         margin-top: 8px;
     }
+    .content-header>a>span{
+        display: none;
+    }
+    .topnav{
+        width: 90%;
+        margin-left: 5%;
+        padding: 8px;
+    }
+    .topnav>a{
+        flex: 1;
+    }
 }
