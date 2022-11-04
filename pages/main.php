@@ -97,6 +97,36 @@
                 </div>
             </div>
         </div>
+        <div class=content-header v-if="activeTab == 2">
+            <a>
+                <h2><i class="fi fi-rr-document-signed"></i> Monitoring Semua Tiket</h2>
+                <span>Menampilkan total tiket <strong>{{ listData.length > 10 ? '10' : listData.length }}</strong> dari total <strong>{{ listData.length }}</strong> tiket.</span>
+            </a>
+            <div class=tableticket>
+                <table>
+                    <thead>
+                        <th>No.</th>
+                        <th>Ticket ID</th>
+                        <th>Serial Number</th>
+                        <th>Request Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(row,index) in listData" :key="row.id" @click=showDetailTicket(row)>
+                            <td>{{index + 1}}.</td>
+                            <td>TIC-{{row.id}}</td>
+                            <td style="text-align: left;">{{row.sn_unit}}</td>
+                            <td>{{row.req_date}}</td>
+                            <td>{{row.status}}
+                                <span></
+                            </td>
+                            <td><a @click=showDetailTicket(row)><i class="fi fi-rr-search-alt"></i> Lihat Ticket </a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div>
             <button @click="isAddData = true" title="Buat tiket baru" class=addbtn><i class="fi fi-rr-plus"></i></button>
         </div>
@@ -130,9 +160,9 @@
                 </form>
             </div>
         </div>
-        <div class="addbox detailout" v-if=showDetail>
+        <div class="addbox detailout" v-if=showDetail @click.self="showDetail = false">
             <div class="conbox detail">
-                <h2>
+                <h2> 
                     <span><i class="fi fi-rr-ticket"></i> Detail Tiket</span>
                     <a @click="showDetail = false"><i class="fi fi-rr-cross-small"></i></a>
                 </h2>
@@ -144,7 +174,7 @@
                     <div class=contdet>
                         <div>
                             <p>Ticket ID</p>
-                            <h4>{{ ticketDetail.id }}</h4>
+                            <h4>TIC-{{ ticketDetail.id }}</h4>
                         </div>
                         <div>
                             <p>Serial Number Unit</p>
@@ -206,7 +236,7 @@
                     showNotifSuccess: false,
                     ticketDetail: '',
                     showDetail: false,
-                    activeTab: 1,
+                    activeTab: 2,
                 }
             },
             methods: {
