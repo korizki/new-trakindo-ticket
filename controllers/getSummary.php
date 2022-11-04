@@ -1,7 +1,7 @@
 <?php 
     include 'connection.php';
     session_start();
-    $user = $_SESSION['logged_user'];
+    $user = $_SESSION['user'];
         $array_data = array();
         $query = "SELECT * FROM tickets WHERE requestor = '$user' ORDER BY req_date DESC";
         $result = mysqli_query($connection, $query);

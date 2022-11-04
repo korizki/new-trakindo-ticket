@@ -14,7 +14,8 @@
             // memuat sesi dan menyimpan informasi sesi
             session_start();
             $row = mysqli_fetch_array($checking, MYSQLI_ASSOC);
-            $_SESSION['logged_user'] = $username;
+            $_SESSION['logged_user'] = $row['nama_user'];
+            $_SESSION['user'] = $username;
             $_SESSION['logged_user_comp'] = $row['company'];
             $_SESSION['logged_user_type'] = $row['type'];
             // arahkan ke main page

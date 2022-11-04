@@ -64,6 +64,7 @@ body{
 }
 .sbmt:hover, .sbmt:focus{
     outline: none;
+    border: 1px solid orange;
     box-shadow: 0 0 7px 0 orange;
 }
 i{
