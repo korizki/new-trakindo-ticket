@@ -46,7 +46,7 @@
             </div>
             <a>
                 <h2><i class="fi fi-rr-document-signed"></i> Rangkuman Semua Tiket</h2>
-                <span href="#"><i class="fi fi-rr-caret-right"></i></span>
+                <span><i class="fi fi-rr-caret-right"></i></span>
             </a>
             <div class=sumbox>
                 <div class=eachcontent>
@@ -76,7 +76,7 @@
             </div>
             <a>
                 <h2><i class="fi fi-rr-ticket trans"></i> Tiket Terakhir Dibuat</h2>
-                <span href="#"><i class="fi fi-rr-caret-right"></i></span>
+                <span><i class="fi fi-rr-caret-right"></i></span>
             </a>
             <div class=lastticket>
                 <div class=singleticket v-for="ticket in lastCreatedTicket" :key="ticket.id">
@@ -102,7 +102,7 @@
             <div class=conbox>
                 <h2>
                     <span><i class="fi fi-rr-envelope-plus"></i> Buat Tiket Baru</span>
-                    <a href="#" @click="isAddData = false"><i class="fi fi-rr-cross-small"></i></a>
+                    <a @click="isAddData = false"><i class="fi fi-rr-cross-small"></i></a>
                 </h2>
                 <form id="formadd" class="form" @submit.prevent="submitNewRequest">
                     <div class=formsec>
@@ -122,7 +122,7 @@
                         <input type="tel" name="phone" required placeholder="Contoh: 08123456789">
                     </div>
                     <div class="formsec btnfield">
-                        <a href="#" @click="isAddData = false">Batal</a>
+                        <a @click="isAddData = false">Batal</a>
                         <button class="sbmt" type="submit" >Submit Request</button>
                     </div>
                 </form>
@@ -132,7 +132,7 @@
             <div class="conbox detail">
                 <h2>
                     <span><i class="fi fi-rr-ticket"></i> Detail Tiket</span>
-                    <a href="#" @click="showDetail = false"><i class="fi fi-rr-cross-small"></i></a>
+                    <a @click="showDetail = false"><i class="fi fi-rr-cross-small"></i></a>
                 </h2>
                 <div class=detsect>
                     <h3>
