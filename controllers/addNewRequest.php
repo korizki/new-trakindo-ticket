@@ -1,7 +1,7 @@
 <?php
     include "connection.php";
     session_start();
-    $username = $_SESSION['logged_user'];
+    $username = $_SESSION['user'];
     $company = $_SESSION['logged_user_comp'];
     $sn = $_POST['sn'];
     $desc = $_POST['desc'];
