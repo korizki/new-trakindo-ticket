@@ -3,7 +3,7 @@
     session_start();
     $user = $_SESSION['user'];
         $array_data = array();
-        $query = "SELECT * FROM tickets WHERE requestor = '$user' ORDER BY req_date DESC";
+        $query = "SELECT t.ticket_id, t.requestor, t.sn_unit, t.job_type, t.req_date, t.cp_email, t.cp_phone, t.status, u.company FROM tickets t LEFT JOIN user u ON t.requestor = u.user_name WHERE t.requestor = '$user' ORDER BY req_date DESC";
         $result = mysqli_query($connection, $query);
         while($row = mysqli_fetch_array($result)){
             $array_data[] = array(
@@ -14,7 +14,8 @@
                 "req_date" => $row['req_date'],
                 "email" => $row['cp_email'],
                 "phone" => $row['cp_phone'],
-                "status" => $row['status']
+                "company" => $row['company'],
+                "status" => $row['status'],
             );
         }
         echo json_encode($array_data);

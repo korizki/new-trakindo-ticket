@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class=eachcontent>
-                    <h1 class="pad">{{ (listData.filter(item => item.status != 'Created' || item.status != 'Closed')).length }} <span class="mini">Tiket</span></h1>
+                    <h1 class="pad">{{ (listData.filter(item => item.status != 'Created' && item.status != 'Closed')).length }} <span class="mini">Tiket</span></h1>
                     <div>
                         <h3 class=><i class="fi fi-rr-rotate-right colwarn"></i> Tiket On Progress</h3>
                         <p>Total tiket berlangsung / on-progress</p>
@@ -102,6 +102,20 @@
                 <h2><i class="fi fi-rr-document-signed"></i> Monitoring Semua Tiket</h2>
                 <span>Menampilkan total tiket <strong>{{ listData.length > 10 ? '10' : listData.length }}</strong> dari total <strong>{{ listData.length }}</strong> tiket.</span>
             </a>
+            <p class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat melihat detail tiket dengan klik pada baris tiket atau <strong>Lihat Tiket</strong> pada kolom Action.</p>
+            <div class=searchbox>
+                <form>
+                    <select v-model="criteriaSearch" @change=handleChangeSelect>
+                        <option value="">Pilih Kategori Pencarian</option>
+                        <option value="sn_unit">Serial Number Unit</option>
+                        <option value="company">Perusahaan</option>
+                        <option value="requestor">Requestor</option>
+                        <option value="status">Status</option>
+                    </select>
+                    <input type="text" v-model="keyword" ref=inputkeyword>
+                    <button><i class="fi fi-rr-search"></i></button>
+                </form>
+            </div>
             <div class=tableticket>
                 <table>
                     <thead>
@@ -113,7 +127,7 @@
                         <th>Action</th>
                     </thead>
                     <tbody>
-                        <tr v-for="(row,index) in listData" :key="row.id" @click=showDetailTicket(row)>
+                        <tr v-for="(row,index) in filteredTickets" :key="row.id" @click=showDetailTicket(row)>
                             <td>{{index + 1}}.</td>
                             <td>TIC-{{row.id}}</td>
                             <td style="text-align: left;">{{row.sn_unit}}</td>
@@ -125,6 +139,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="bottomnav">
+                    <a><i class="fi fi-rr-caret-left"></i></a>
+                    <a><i class="fi fi-rr-caret-right"></i></a>
+                </div>
             </div>
         </div>
         <div>
@@ -237,6 +255,8 @@
                     ticketDetail: '',
                     showDetail: false,
                     activeTab: 2,
+                    criteriaSearch: '',
+                    keyword: '',
                 }
             },
             methods: {
@@ -248,7 +268,9 @@
                 },
                 loadData(data){
                     this.listData = JSON.parse(data)
-                    console.log(this.ticketDetail)
+                },
+                handleChangeSelect(){
+                    this.$refs.inputkeyword.focus()
                 },
                 getDataFromAPI(){
                     $.ajax({
@@ -288,6 +310,9 @@
             computed: {
                 lastCreatedTicket(){
                     return this.listData.slice(0,5)
+                },
+                filteredTickets(){
+                    return this.listData.filter(item => item[this.criteriaSearch || 'requestor'].toLowerCase().includes((this.keyword).toLowerCase()))
                 }
             },
             mounted(){

@@ -190,9 +190,6 @@ a{
     transform: translateY(4px);
     margin-right: 8px;
 }
-.fi-rr-caret-right{
-    transform: rotate(90deg)
-}
 .mini{
     display: block;
     font-size: 0.4em;
@@ -554,5 +551,63 @@ tbody>tr>td>a{
 }
 tbody>tr>td>a:hover{
     color: orange;
-
+}
+.searchbox>form{
+    display: flex;
+    margin-top: 16px;
+}
+.searchbox>form>select{
+    border-radius: 8px 0 0 8px;
+}
+.searchbox>form>button{
+    border-radius: 0 8px 8px 0;
+    transition: 0.3s all;
+}
+.searchbox>form>button:hover{
+    background: dodgerblue;
+    color: white;
+    border: 1px solid dodgerblue;
+    cursor: pointer;
+}
+.searchbox>form>select,.searchbox>form>input,.searchbox>form>button{
+    padding: 12px 24px;
+    border: 1px solid #ddd;
+    background: rgb(250,250,250);
+}
+.searchbox>form>input{
+    flex: 1;
+    background: white;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+}
+.searchbox>form>input:focus{
+    outline: none;
+}
+.bottomnav{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+}
+.bottomnav>a:first-child{
+    border-radius: 4px 0 0 4px;
+    border-right: 1px solid transparent;
+}
+.bottomnav>a:nth-child(2){
+    border-radius: 0 4px 4px 0;
+}
+.bottomnav>a>i{
+    display: inline-block;
+    transform: translate(2px, 2px);
+}
+.bottomnav>a{
+    display: inline-block; 
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    transition: all 0.3s;
+    background: white;
+}
+.bottomnav>a:hover{
+    background: orange;
+    color: white;
+    border: 1px solid orange;
 }

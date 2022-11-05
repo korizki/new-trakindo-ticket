@@ -100,5 +100,7 @@
     .topnav>a{
         flex: 1;
     }
-    
+    .bottomnav{
+        justify-content: center;
+    }
 }
