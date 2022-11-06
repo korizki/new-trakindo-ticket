@@ -125,4 +125,8 @@
     .bottomnav>a{
         padding: 0.4em 0.6em;
     }
+    .cleartext{
+        right: 11%;
+        top: 10px;
+    }
 }

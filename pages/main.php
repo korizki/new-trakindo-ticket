@@ -92,7 +92,7 @@
                             <span> Ticket Id. {{ticket.id}} - {{ticket.sn_unit}}</span>
                             <span>Dibuat pada {{(new Date(ticket.req_date)).toLocaleDateString('id-ID')}}</span>
                         </span>
-                        <a title="Update Status Tiket" v-if="userAccess = 'Administrator'" class=updatebtns><i class="fi fi-rr-refresh"></i></a>
+                        <a @click="updateTicket(ticket)" title="Update Status Tiket" v-if="userAccess == 'Administrator'" class=updatebtns><i class="fi fi-rr-refresh"></i></a>
                     </h3>
                     <div class=detrequestor>
                         <h4><i class="fi fi-rr-info"></i> Status : <span class="badgee" :class="ticket.status">{{ticket.status}}</span></h4>
@@ -153,6 +153,9 @@
                     <a @click="tableNavClick('next')"><i class="fi fi-rr-caret-right"></i></a>
                 </div>
             </div>
+        </div>
+        <div class=content-header v-if="activeTab == 3">
+            <h2>Update Ticket Status</h2>
         </div>
         <div v-if="userAccess != 'Administrator'">
             <button @click="isAddData = true" title="Buat tiket baru" class=addbtn><i class="fi fi-rr-plus"></i></button>
@@ -240,7 +243,8 @@
                     </div>
                 </div>
                 <div class="detsect">
-                    <button @click="showDetail = false" class=btntutup>Tutup</button>
+                    <button v-if="userAccess == 'Administrator'" @click="updateTicket(ticketDetail)" class=btntutup>Update Ticket</button>
+                    <button @click="showDetail = false" class=btntutup :class="{line: userAccess == 'Administrator'}">Tutup</button>
                 </div>
             </div>
         </div>
@@ -268,7 +272,8 @@
                     keyword: '',
                     activePage: 1,
                     totalPage: 0,
-                    userAccess: ''
+                    userAccess: '',
+                    ticketWillUpdate: ''
                 }
             },
             methods: {
@@ -332,6 +337,11 @@
                             }
                         }
                     })
+                },
+                updateTicket(ticket){
+                    this.ticketWillUpdate = ticket
+                    this.activeTab = 3
+
                 }
             },
             computed: {
