@@ -100,13 +100,13 @@
         <div class=content-header v-if="activeTab == 2">
             <a>
                 <h2><i class="fi fi-rr-document-signed"></i> Monitoring Semua Tiket</h2>
-                <span>Menampilkan total tiket <strong>{{ listData.length > 10 ? '10' : listData.length }}</strong> dari total <strong>{{ listData.length }}</strong> tiket.</span>
+                <span>Menampilkan total tiket <strong>{{ filteredTickets.length > 10 ? '10' : filteredTickets.length }}</strong> dari total <strong>{{ listData.length }}</strong> tiket.</span>
             </a>
             <p class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat melihat detail tiket dengan klik pada baris tiket atau <strong>Lihat Tiket</strong> pada kolom Action.</p>
             <div class=searchbox>
                 <form>
                     <select v-model="criteriaSearch" @change=handleChangeSelect>
-                        <option value="">Pilih Kategori Pencarian</option>
+                        <option value="">Kategori Pencarian</option>
                         <option value="sn_unit">Serial Number Unit</option>
                         <option value="company">Perusahaan</option>
                         <option value="requestor">Requestor</option>
@@ -120,7 +120,7 @@
                 <table>
                     <thead>
                         <th>No.</th>
-                        <th>Ticket ID</th>
+                        <th class=mobile>Ticket ID</th>
                         <th>Serial Number</th>
                         <th>Request Date</th>
                         <th>Status</th>
@@ -128,20 +128,20 @@
                     </thead>
                     <tbody>
                         <tr v-for="(row,index) in filteredTickets" :key="row.id" @click=showDetailTicket(row)>
-                            <td>{{index + 1}}.</td>
-                            <td>TIC-{{row.id}}</td>
+                            <td>{{(activePage-1)* 10 + index + 1}}.</td>
+                            <td class=mobile>TIC-{{row.id}}</td>
                             <td style="text-align: left;">{{row.sn_unit}}</td>
                             <td>{{row.req_date}}</td>
                             <td>{{row.status}}
                                 <span></
                             </td>
-                            <td><a @click=showDetailTicket(row)><i class="fi fi-rr-search-alt"></i> Lihat Ticket </a></td>
+                            <td><a @click=showDetailTicket(row)><i class="fi fi-rr-search-alt"></i> <span class=mobile>Lihat Ticket<span> </a></td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="bottomnav">
-                    <a><i class="fi fi-rr-caret-left"></i></a>
-                    <a><i class="fi fi-rr-caret-right"></i></a>
+                    <a @click="tableNavClick('prev')"><i class="fi fi-rr-caret-left"></i></a>
+                    <a @click="tableNavClick('next')"><i class="fi fi-rr-caret-right"></i></a>
                 </div>
             </div>
         </div>
@@ -257,6 +257,8 @@
                     activeTab: 2,
                     criteriaSearch: '',
                     keyword: '',
+                    activePage: 1,
+                    totalPage: 0,
                 }
             },
             methods: {
@@ -268,6 +270,8 @@
                 },
                 loadData(data){
                     this.listData = JSON.parse(data)
+                    this.totalPage = Math.ceil(this.listData.length/10)
+                    console.log(this.totalPage)
                 },
                 handleChangeSelect(){
                     this.$refs.inputkeyword.focus()
@@ -286,6 +290,15 @@
                 showDetailTicket(ticket){
                     this.ticketDetail = ticket
                     this.showDetail = true
+                },
+                tableNavClick(nav){
+                    if(nav == 'prev'){
+                        this.activePage--
+                        this.activePage = this.activePage == 0 ? 1 : this.activePage
+                    } else {
+                        this.activePage++
+                        this.activePage = this.activePage > this.totalPage ? this.totalPage : this.activePage
+                    }
                 },
                 submitNewRequest(){
                     $.ajax({
@@ -312,7 +325,7 @@
                     return this.listData.slice(0,5)
                 },
                 filteredTickets(){
-                    return this.listData.filter(item => item[this.criteriaSearch || 'requestor'].toLowerCase().includes((this.keyword).toLowerCase()))
+                    return (this.listData.filter(item => item[this.criteriaSearch || 'requestor'].toLowerCase().includes((this.keyword).toLowerCase()))).slice((this.activePage - 1)*10, (this.activePage*10))
                 }
             },
             mounted(){

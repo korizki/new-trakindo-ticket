@@ -601,7 +601,7 @@ tbody>tr>td>a:hover{
 }
 .bottomnav>a{
     display: inline-block; 
-    padding: 8px 12px;
+    padding: 8px 10px;
     border: 1px solid #ddd;
     transition: all 0.3s;
     background: white;

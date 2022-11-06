@@ -36,6 +36,7 @@
     }
     .inline{
         text-align: center;
+        line-height: 1.5;
     }
     .conbox{
         width: 90%;
@@ -102,5 +103,26 @@
     }
     .bottomnav{
         justify-content: center;
+    }
+    .searchbox>form>select,.searchbox>form>input,.searchbox>form>button{
+        padding: 8px;
+    }
+    .searchbox>form>select{
+        border-radius: 4px 0 0 4px;
+    }
+    .searchbox>form>button{
+        border-radius: 0 4px 4px 0;
+    }
+    .tableticket>table{
+        font-size: 0.8em;
+    }
+    table>thead>tr>th, table>tbody>tr>td{
+        padding: 0.75em 1em;
+    }
+    .mobile{
+        display: none;
+    }
+    .bottomnav>a{
+        padding: 0.4em 0.6em;
     }
 }
