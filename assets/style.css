@@ -336,6 +336,7 @@ a{
     display: flex;
     gap: 8px;
     align-items: center;
+    position: relative;
 }
 .rightinfo{
     display: flex;
@@ -616,4 +617,21 @@ tbody>tr>td>a:hover{
     position: absolute;
     right: 80px;
     top: 13px;
+}
+.updatebtns{
+    padding: 5px 8px;
+    padding-right: 5px;
+    border: 2px solid orange;
+    color: orange;
+    font-size: 0.8em;
+    font-weight: 600;
+    border-radius: 8px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    transition: all 0.3s;
+}
+.updatebtns:hover{
+    background: orange;
+    color: white;
 }

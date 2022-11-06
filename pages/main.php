@@ -92,6 +92,7 @@
                             <span> Ticket Id. {{ticket.id}} - {{ticket.sn_unit}}</span>
                             <span>Dibuat pada {{(new Date(ticket.req_date)).toLocaleDateString('id-ID')}}</span>
                         </span>
+                        <a title="Update Status Tiket" v-if="userAccess = 'Administrator'" class=updatebtns><i class="fi fi-rr-refresh"></i></a>
                     </h3>
                     <div class=detrequestor>
                         <h4><i class="fi fi-rr-info"></i> Status : <span class="badgee" :class="ticket.status">{{ticket.status}}</span></h4>
