@@ -19,9 +19,11 @@
         } else {
             $user = $_SESSION['logged_user'];
             $comp = $_SESSION['logged_user_comp'];
+            $access = $_SESSION['logged_user_type'];
             echo "<script>
                 localStorage.setItem('user', '$user')
                 localStorage.setItem('company', '$comp')
+                localStorage.setItem('temp', btoa('$access'))
             </script>";
         }
 
@@ -42,9 +44,11 @@
         </div>
         <div class=content-header v-if="activeTab == 1">
             <div class=welcom>
-                <h2><i class="fi fi-rr-comment-user trans"></i> Selamat Datang User</h2>
-                <p class="user">Anda berhasil Log In kembali <strong>{{ user }}</strong>, berikut rangkuman seluruh tiket yang dibuat oleh perusahaan anda, <strong>{{ company }}</strong>.</p>
-                <p class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat membuat tiket baru dengan <strong>klik icon '+'</strong> pada kanan bawah halaman.</p>
+                <h2><i class="fi fi-rr-comment-user trans"></i> Selamat Datang User  {{userAccess}}</h2>
+                <p class="user">Anda berhasil Log In kembali <strong>{{ user }}</strong>, berikut rangkuman seluruh tiket yang dibuat oleh perusahaan <span v-if="userAccess == 'Administrator'">rekanan</span><span v-else>anda, <strong>{{ company }}</strong></span>.</p>
+                <p v-if="userAccess != 'Administrator'" class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat membuat tiket baru dengan <strong>klik icon '+'</strong> pada kanan bawah halaman.</p>
+                <p v-else class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat mengupdate tiket pada tab <strong>Report</strong> atau pada form <strong>Detail Ticket</strong>.</p>
+
             </div>
             <a>
                 <h2><i class="fi fi-rr-document-signed"></i> Rangkuman Semua Tiket</h2>
@@ -54,9 +58,9 @@
                 <div class=eachcontent>
                     <h1 class=" pad">{{ (listData.filter(item => item.status == 'Created')).length }} <span class="mini">Tiket</span></h1>
                     <div>
-                        <h3 class=><i class="fi fi-rr-edit colblue"></i> Tiket Baru Dibuat</h3>
+                        <h3 class=><i class="fi fi-rr-edit colblue"></i> Tiket Baru <span v-if="userAccess != 'Administrator'">Dibuat</span></h3>
                         <p>Total semua tiket yang dibuat.</p>
-                        <button class=review>Lihat Tiket</button>
+                        <button class=review @click="ticketSummary('Created')">Lihat Tiket</button>
                     </div>
                 </div>
                 <div class=eachcontent>
@@ -64,7 +68,7 @@
                     <div>
                         <h3 class=><i class="fi fi-rr-rotate-right colwarn"></i> Tiket On Progress</h3>
                         <p>Total tiket berlangsung / on-progress</p>
-                        <button class=review>Lihat Tiket</button>
+                        <button class=review @click="ticketSummary('Process')">Lihat Tiket</button>
                     </div>
                 </div>
                 <div class=eachcontent>
@@ -72,7 +76,7 @@
                     <div>
                         <h3 class=><i class="fi fi-rr-checkbox colgreen"></i> Tiket Selesai</h3>
                         <p>Total tiket dengan status selesai.</p>
-                        <button class=review>Lihat Tiket</button>
+                        <button class=review @click="ticketSummary('Completed')">Lihat Tiket</button>
                     </div>
                 </div>
             </div>
@@ -104,7 +108,7 @@
             </a>
             <p class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat melihat detail tiket dengan klik pada baris tiket atau <strong>Lihat Tiket</strong> pada kolom Action.</p>
             <div class=searchbox>
-                <form>
+                <form style="position: relative">
                     <select v-model="criteriaSearch" @change=handleChangeSelect>
                         <option value="">Kategori Pencarian</option>
                         <option value="sn_unit">Serial Number Unit</option>
@@ -113,6 +117,7 @@
                         <option value="status">Status</option>
                     </select>
                     <input type="text" v-model="keyword" ref=inputkeyword>
+                    <a v-if="keyword.length" class=cleartext @click="keyword = ''"><i class="fi fi-rr-cross-small"></i></a>
                     <button><i class="fi fi-rr-search"></i></button>
                 </form>
             </div>
@@ -137,6 +142,9 @@
                             </td>
                             <td><a @click=showDetailTicket(row)><i class="fi fi-rr-search-alt"></i> <span class=mobile>Lihat Ticket<span> </a></td>
                         </tr>
+                        <tr v-if=!filteredTickets.length>
+                            <td colspan=6>Sorry, no data found.</td>
+                        </tr>
                     </tbody>
                 </table>
                 <div class="bottomnav">
@@ -145,7 +153,7 @@
                 </div>
             </div>
         </div>
-        <div>
+        <div v-if="userAccess != 'Administrator'">
             <button @click="isAddData = true" title="Buat tiket baru" class=addbtn><i class="fi fi-rr-plus"></i></button>
         </div>
         <div class="addbox" v-if=isAddData>
@@ -254,14 +262,20 @@
                     showNotifSuccess: false,
                     ticketDetail: '',
                     showDetail: false,
-                    activeTab: 2,
+                    activeTab: 1,
                     criteriaSearch: '',
                     keyword: '',
                     activePage: 1,
                     totalPage: 0,
+                    userAccess: ''
                 }
             },
             methods: {
+                ticketSummary(status){
+                    this.criteriaSearch = 'status'
+                    this.keyword = status 
+                    this.activeTab = 2
+                },
                 logOutUser(){
                     let confirm = window.confirm('Anda yakin ingin keluar?')
                     if(confirm){
@@ -271,7 +285,6 @@
                 loadData(data){
                     this.listData = JSON.parse(data)
                     this.totalPage = Math.ceil(this.listData.length/10)
-                    console.log(this.totalPage)
                 },
                 handleChangeSelect(){
                     this.$refs.inputkeyword.focus()
@@ -330,6 +343,8 @@
             },
             mounted(){
                 this.getDataFromAPI()
+                let user = localStorage.getItem('temp')
+                this.userAccess = atob(user)
             }
         }).mount('#app')
     </script>
