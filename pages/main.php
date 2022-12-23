@@ -31,14 +31,13 @@
     <div id="app">
         <nav>
             <a href="./main.php"><img src="../assets/icon/trakindo.png" alt="icon-trakindo" width=140></a>
-            
             <a title="Log Out User" class="logoffbtn" @click="logOutUser"><i class="fi fi-rr-sign-out-alt"></i> <span class="remarklogout">Keluar</span></a>
         </nav>
         <p class=notifsuccess v-if="showNotifSuccess">
             <span><i class="fi fi-rr-badge-check"></i> <strong>Request Tiket berhasil</strong>, silahkan tunggu Feedback / Balasan tiket. Terima kasih.</span>
             <a @click="showNotifSuccess = false"><i class="fi fi-rr-cross-small"></i></a>
         </p>
-        <div class=topnav>
+        <div class=topnav v-if="ticketWillUpdate == ''">
             <a :class="{activetab: activeTab == 1}" @click="activeTab = 1"><i class="fi fi-rr-stats" v-if="activeTab == 1"></i> Summary</a>
             <a :class="{activetab: activeTab == 2}" @click="activeTab = 2"><i class="fi-rr-document-signed" v-if="activeTab == 2"></i> Report</a>
         </div>
@@ -89,7 +88,7 @@
                     <h3>
                         <i class="fi fi-rr-ticket"></i>
                         <span class=rightinfo>
-                            <span> Ticket Id. {{ticket.id}} - {{ticket.sn_unit}}</span>
+                            <span> ID {{ticket.id}} - {{ticket.sn_unit}}</span>
                             <span>Dibuat pada {{(new Date(ticket.req_date)).toLocaleDateString('id-ID')}}</span>
                         </span>
                         <a @click="updateTicket(ticket)" title="Update Status Tiket" v-if="userAccess == 'Administrator'" class=updatebtns><i class="fi fi-rr-refresh"></i></a>
@@ -154,8 +153,75 @@
                 </div>
             </div>
         </div>
-        <div class=content-header v-if="activeTab == 3">
-            <h2>Update Ticket Status</h2>
+        <div class="content-header updateform" v-if="activeTab == 3">
+            <h2><i class="fi fi-rr-edit"></i> Update Status Ticket</h2>
+            <p class="info blue inlines"><i class="fi fi-rr-info"></i> Anda akan memperbaharui status ticket dengan detail berikut.</p>
+            <div class="carddetailtick">
+                <div class="cardfl">
+                    <div class="cardsec">
+                        <p><i class="fi fi-rr-ticket"></i> Ticket ID</p>
+                        <h4>{{ticketWillUpdate.id}}</h4>
+                    </div>
+                    <div class="cardsec">
+                        <p><i class="fi fi-rr-id-badge"></i> SN Unit</p>
+                        <h4>{{ticketWillUpdate.sn_unit}}</h4>
+                    </div>
+                    <div class="cardsec">
+                        <p><i class="fi fi-rr-building"></i> Perusahaan</p>
+                        <h4>{{ticketWillUpdate.company}}</h4>
+                    </div>
+                    <div class="cardsec">
+                        <p><i class="fi fi-rr-mobile-notch"></i> Kontak Person (HP)</p>
+                        <h4>{{ticketWillUpdate.phone}}</h4>
+                    </div>
+                </div>
+                <div class="cardfl">
+                    <div class="cardsec">
+                        <p><i class="fi fi-rr-document-signed"></i> Request Detail</p>
+                        <h4>{{ticketWillUpdate.job}}</h4>
+                    </div>
+                </div>
+                <div class="cardfl">
+                    <div class="cardsec">
+                        <p><i class="fi fi-rr-exclamation"></i> Status Tiket Terakhir</p>
+                        <h4 class="info blue stat">{{ticketWillUpdate.status}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="boxupdate">
+                <form>
+                    <div class="formsec nopad">
+                        <label>Update Status</label>
+                        <!-- <input type="text" name="status"> -->
+                        <select name="status" v-model="updateStatus">
+                            <option value="">Pilih Status</option>
+                            <option value="Advice Only">Advice Only</option>
+                            <option value="Waiting Quote">Waiting Quote</option>
+                            <option value="Waiting Quote Approval / PO">Waiting Quote Approval / PO</option>
+                            <option value="Waiting Schedule Perform">Waiting Schedule Perform</option>
+                            <option value="Waiting Technician">Waiting Technician</option>
+                            <option value="In Progress Perform">In Progress Perform</option>
+                            <option value="Closed">Closed</option>
+                        </select>
+                    </div>
+                    <div class="formsec nopad" v-if="updateStatus != 'Advice Only'" v-if="updateStatus != 'Waiting Quote'" v-if="updateStatus != 'Closed'">
+                        <label>No Quote/ SO</label>
+                        <input type="text" name="quotenumber">
+                    </div>
+                    <div class="formsec nopad" v-if="updateStatus == 'Waiting Quote Approval / PO' || updateStatus == 'In Progress Perform'">
+                        <label>Nama Teknisi</label>
+                        <input type="text" name="teknisi">
+                    </div>
+                    <div class="formsec nopad">
+                        <label>Catatan Tambahan</label>
+                        <input type="text" name="note">
+                    </div>
+                    <div class="upform nopad nopad-btn">
+                        <a @click="cancelUpdate">Batal</a>
+                        <button type="submit"><i class="fi fi-rr-disk"></i> Simpan</button>
+                    </div>
+                </form>
+            </div>
         </div>
         <div v-if="userAccess != 'Administrator'">
             <button @click="isAddData = true" title="Buat tiket baru" class=addbtn><i class="fi fi-rr-plus"></i></button>
@@ -273,7 +339,8 @@
                     activePage: 1,
                     totalPage: 0,
                     userAccess: '',
-                    ticketWillUpdate: ''
+                    ticketWillUpdate: '',
+                    updateStatus: ''
                 }
             },
             methods: {
@@ -305,6 +372,11 @@
                             this.company = localStorage.getItem('company')
                         }
                     })
+                },
+                cancelUpdate(){
+                    this.activeTab = 1
+                    this.ticketWillUpdate = ''
+                    this.updateStatus = ''
                 },
                 showDetailTicket(ticket){
                     this.ticketDetail = ticket
@@ -339,9 +411,11 @@
                     })
                 },
                 updateTicket(ticket){
+                    window.scrollTo(0,0)
                     this.ticketWillUpdate = ticket
+                    this.showDetail = false
                     this.activeTab = 3
-
+                    
                 }
             },
             computed: {
