@@ -684,7 +684,7 @@ tbody>tr>td>a:hover{
 }
 .stat{
     text-align: center;
-    margin-top: 8px;
+    margin-top: 8px !important;
 }
 .nopad{
     padding: 12px 0;

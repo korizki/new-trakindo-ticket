@@ -189,7 +189,7 @@
                 </div>
             </div>
             <div class="boxupdate">
-                <form>
+                <form @submit.prevent="submitUpdate" id="formUpdate">
                     <div class="formsec nopad">
                         <label>Update Status</label>
                         <!-- <input type="text" name="status"> -->
@@ -415,7 +415,45 @@
                     this.ticketWillUpdate = ticket
                     this.showDetail = false
                     this.activeTab = 3
-                    
+                },
+                submitUpdate(){
+                    // update status ticket
+                    let form = new FormData(document.querySelector('#formUpdate'))
+                    let obj = Object.fromEntries(form.entries())
+                    // update status ticket 
+                    $.ajax({
+                        url: '../controllers/updateTicketStatus.php',
+                        data: {id: this.ticketWillUpdate.id, status: obj.status},
+                        method: 'POST',
+                        error: () => {
+                            alert('Gagal update tiket.')
+                        }
+                    })
+                    // add to history
+                    $.ajax({
+                        url: '../controllers/addTicketHistory.php',
+                        data: {id: this.ticketWillUpdate.id, date: this.ticketWillUpdate.req_date.slice(0,10)},
+                        method: 'POST',
+                        success: () => {
+                            // update data dengan id dan tanggal
+                            obj.date = (new Date()).toLocaleDateString('fr-CA')
+                            obj.id = this.ticketWillUpdate.id
+                            // update history
+                            $.ajax({
+                                url: '../controllers/updateTicketHistory.php',
+                                data: obj,
+                                method: 'POST',
+                                success: () => {
+                                    alert('Berhasil update ticket.')
+                                    setTimeout(() => {
+                                        this.activeTab = 1
+                                        this.getDataFromAPI()
+                                    },500)
+                                }
+                            })
+                            console.log(obj)
+                        }
+                    })
                 }
             },
             computed: {
