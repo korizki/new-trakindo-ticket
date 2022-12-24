@@ -47,8 +47,8 @@
         </div>
         <div class=content-header v-if="activeTab == 1">
             <div class=welcom>
-                <h2><i class="fi fi-rr-comment-user trans"></i> Selamat Datang User  {{userAccess}}</h2>
-                <p class="user">Anda berhasil Log In kembali <strong>{{ user }}</strong>, berikut rangkuman seluruh tiket yang dibuat oleh perusahaan <span v-if="userAccess == 'Administrator'">rekanan</span><span v-else>anda, <strong>{{ company }}</strong></span>.</p>
+                <h2><i class="fi fi-rr-comment-user trans"></i> Selamat Datang {{user}}</h2>
+                <p class="user">Anda berhasil Log In kembali, berikut rangkuman seluruh tiket yang dibuat oleh perusahaan <span v-if="userAccess == 'Administrator'">rekanan</span><span v-else>anda, <strong>{{ company }}</strong></span>.</p>
                 <p v-if="userAccess != 'Administrator'" class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat membuat tiket baru dengan <strong>klik icon '+'</strong> pada kanan bawah halaman.</p>
                 <p v-else class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat mengupdate tiket pada tab <strong>Report</strong> atau pada form <strong>Detail Ticket</strong>.</p>
 
@@ -298,7 +298,7 @@
                     </div>
                 </div>
                 <!-- detail history -->
-                <div class="detsect">
+                <div class="detsect" v-if="ticketDetail.history">
                     <h3><span><i class="fi fi-rr-chart-line-up"></i> History Tiket</span></h3>
                     <div class="contdet flexible">
                         <table>
@@ -390,7 +390,7 @@
                             <p>Quote Trakindo</p>
                             <h4><a target="_blank" title="Lihat dokumen" :href="`../assets/file_admin/${ticketDetail.url_trakindo}`">{{ ticketDetail.url_trakindo }}</a></h4>
                         </div>
-                        <div class=pesan>
+                        <div class=pesan v-if="userAccess != 'Administrator'">
                             <p>Approval Quote dari User</p>
                             <form v-if="ticketDetail.url_customer == ''" @submit.prevent="userUploadFile(ticketDetail.id)" class="formuploaduser">
                                 <input type="file" accept="application/pdf" name="files" required >
