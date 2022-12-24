@@ -129,4 +129,11 @@
         right: 11%;
         top: 10px;
     }
+    .carddetailtick{
+        padding: 12px;
+    }
+    .cardfl{
+        flex-direction: column;
+        gap: 16px;
+    }
 }
