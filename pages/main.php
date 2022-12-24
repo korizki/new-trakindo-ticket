@@ -216,15 +216,15 @@
                     </div>
                     <div class="formsec nopad" v-if="updateStatus != 'Advice Only' && updateStatus != 'Waiting Quote' && updateStatus != 'Closed' && updateStatus != ''">
                         <label>No Quote/ SO</label>
-                        <input type="text" name="quotenumber" placeholder="Ketik nomor quote/so ...">
+                        <input autocomplete="off" type="text" name="quotenumber" placeholder="Ketik nomor quote/so ...">
                     </div>
                     <div class="formsec nopad" v-if="updateStatus == 'Waiting Quote Approval / PO' || updateStatus == 'In Progress Perform'">
                         <label>Nama Teknisi</label>
-                        <input type="text" name="teknisi" placeholder="Ketik nama teknisi ...">
+                        <input autocomplete="off" type="text" name="teknisi" placeholder="Ketik nama teknisi ...">
                     </div>
                     <div class="formsec nopad">
                         <label>Catatan Tambahan</label>
-                        <input type="text" name="note" placeholder ="Ketik catatan tambahan ...">
+                        <input autocomplete="off" type="text" name="note" placeholder ="Ketik catatan tambahan ...">
                     </div>
                     <div class="formsec nopad" v-if="updateStatus == 'Waiting Quote Approval / PO'">
                         <label>Upload Quote</label>
@@ -249,19 +249,19 @@
                 <form id="formadd" class="form" @submit.prevent="submitNewRequest">
                     <div class=formsec>
                         <label for="sn">Serial Number Unit</label>
-                        <input type="text" name="sn" required placeholder="Contoh: EX-001">
+                        <input type="text" name="sn" required placeholder="Contoh: EX-001" autocomplete="off" >
                     </div>
                     <div class=formsec>
                         <label for="desc">Deskripsi Pekerjaan</label>
-                        <textarea name="desc"  rows="3" required placeholder="Contoh: Penggantian Radiator "></textarea>
+                        <textarea name="desc" autocomplete="off" rows="3" required placeholder="Contoh: Penggantian Radiator "></textarea>
                     </div>
                     <div class=formsec>
                         <label for="email">Email Requestor</label>
-                        <input type="email" name="email" placeholder="Contoh: admin@gmail.com" required>
+                        <input type="email" autocomplete="off" name="email" placeholder="Contoh: admin@gmail.com" required>
                     </div>
                     <div class=formsec>
                         <label for="phone">Nomor Handphone Requestor</label>
-                        <input type="tel" name="phone" required placeholder="Contoh: 08123456789">
+                        <input type="tel" autocomplete="off" name="phone" required placeholder="Contoh: 08123456789">
                     </div>
                     <div class="formsec btnfield">
                         <a @click="isAddData = false">Batal</a>
@@ -490,6 +490,7 @@
                             })
                         }
                     })
+                    this.updateStatus = ''
                 }
             },
             computed: {
