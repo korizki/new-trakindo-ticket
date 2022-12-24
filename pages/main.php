@@ -38,7 +38,7 @@
             <a @click="showNotifSuccess = false"><i class="fi fi-rr-cross-small"></i></a>
         </p>
         <p class=notifsuccess v-if="showNotifSuccessUpdate">
-            <span><i class="fi fi-rr-badge-check"></i> <strong>Tiket berhasil diupdate.</strong>, Terima kasih.</span>
+            <span><i class="fi fi-rr-badge-check"></i> <strong>Tiket berhasil diupdate.</strong>  Terima kasih.</span>
             <a @click="showNotifSuccess = false"><i class="fi fi-rr-cross-small"></i></a>
         </p>
         <div class=topnav v-if="ticketWillUpdate == ''">
@@ -225,6 +225,10 @@
                     <div class="formsec nopad">
                         <label>Catatan Tambahan</label>
                         <input type="text" name="note" placeholder ="Ketik catatan tambahan ...">
+                    </div>
+                    <div class="formsec nopad" v-if="updateStatus == 'Waiting Quote Approval / PO'">
+                        <label>Upload Quote</label>
+                        <input type="file" accept="application/pdf" name="files" placeholder ="Pilih File Quote ...">
                     </div>
                     <div class="upform nopad nopad-btn">
                         <a @click="cancelUpdate">Batal</a>
@@ -430,11 +434,11 @@
                 submitUpdate(){
                     // update status ticket
                     let form = new FormData(document.querySelector('#formUpdate'))
-                    let obj = Object.fromEntries(form.entries())
+                    let obj = form;
                     // update status ticket 
                     $.ajax({
                         url: '../controllers/updateTicketStatus.php',
-                        data: {id: this.ticketWillUpdate.id, status: obj.status},
+                        data: {id: this.ticketWillUpdate.id, status: (Object.fromEntries(obj.entries())).status},
                         method: 'POST',
                         error: () => {
                             alert('Gagal update tiket.')
@@ -447,14 +451,33 @@
                         method: 'POST',
                         success: () => {
                             // update data dengan id dan tanggal
-                            obj.date = (new Date()).toLocaleDateString('fr-CA')
-                            obj.id = this.ticketWillUpdate.id
+                            obj.append('date',(new Date()).toLocaleDateString('fr-CA'))
+                            obj.append('id', this.ticketWillUpdate.id)  
                             // update history
                             $.ajax({
                                 url: '../controllers/updateTicketHistory.php',
                                 data: obj,
+                                contentType: false,
+                                processData: false,
                                 method: 'POST',
                                 success: () => {
+                                    // jika status approval maka tambah proses upload file
+                                    if(Object.fromEntries(obj.entries()).status == 'Waiting Quote Approval / PO'){
+                                        // menambahkan field
+                                        obj.append('ticket_id', this.ticketWillUpdate.id)
+                                        // upload file
+                                        $.ajax({
+                                            url: '../controllers/UploadFile.php',
+                                            data: obj,
+                                            method: 'POST',
+                                            processData: false,
+                                            cache: false,
+                                            contentType: false,
+                                            success : (result) => {
+                                            }
+                                        })
+                                    }
+                                    // redirect ke homepage
                                     this.activeTab = 1
                                     window.scrollTo(0,0)
                                     this.ticketWillUpdate = ''
