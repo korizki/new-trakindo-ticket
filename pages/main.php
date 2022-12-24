@@ -38,7 +38,7 @@
             <a @click="showNotifSuccess = false"><i class="fi fi-rr-cross-small"></i></a>
         </p>
         <p class=notifsuccess v-if="showNotifSuccessUpdate">
-            <span><i class="fi fi-rr-badge-check"></i> <strong>Tiket berhasil diupdate.</strong>  Terima kasih.</span>
+            <span><i class="fi fi-rr-badge-check"></i> <strong>Dokumen / Tiket berhasil diupdate.</strong>  Terima kasih.</span>
             <a @click="showNotifSuccess = false"><i class="fi fi-rr-cross-small"></i></a>
         </p>
         <div class=topnav v-if="ticketWillUpdate == ''">
@@ -56,7 +56,7 @@
             <div class="sections">
                 <a>
                     <h2><i class="fi fi-rr-document-signed"></i> Rangkuman Semua Tiket</h2>
-                    <span>Jumlah semua tiket {{ listData.length }} tiket.</span>
+                    <span>Jumlah semua tiket <strong>{{ listData.length }}</strong> tiket.</span>
                 </a>
                 <div class=sumbox>
                     <div class=eachcontent>
@@ -68,11 +68,11 @@
                         </div>
                     </div>
                     <div class=eachcontent>
-                        <h1 class="pad">{{ (listData.filter(item => item.status != 'Created' && item.status != 'Closed')).length }} <span class="mini">Tiket</span></h1>
+                        <h1 class="pad">{{ (listData.filter(item => item.status != 'Created' && item.status != 'Closed' && item.status != 'Advice Only')).length }} <span class="mini">Tiket</span></h1>
                         <div>
                             <h3 class=><i class="fi fi-rr-rotate-right colwarn"></i> Tiket On Progress</h3>
                             <p>Total tiket berlangsung / on-progress</p>
-                            <button class=review @click="ticketSummary('Process')">Lihat Tiket</button>
+                            <button class=review @click="ticketSummary('Waiting')">Lihat Tiket</button>
                         </div>
                     </div>
                     <div class=eachcontent>
@@ -80,7 +80,7 @@
                         <div>
                             <h3 class=><i class="fi fi-rr-checkbox colgreen"></i> Tiket Selesai</h3>
                             <p>Total tiket dengan status selesai.</p>
-                            <button class=review @click="ticketSummary('Completed')">Lihat Tiket</button>
+                            <button class=review @click="ticketSummary('Closed')">Lihat Tiket</button>
                         </div>
                     </div>
                 </div>
@@ -98,12 +98,12 @@
                                 <span> ID {{ticket.id}} - {{ticket.sn_unit}}</span>
                                 <span>Dibuat pada {{(new Date(ticket.req_date)).toLocaleDateString('id-ID')}}</span>
                             </span>
-                            <a @click="updateTicket(ticket)" title="Update Status Tiket" v-if="userAccess == 'Administrator'" class=updatebtns><i class="fi fi-rr-refresh"></i></a>
+                            <a @click="updateTicket(ticket)" title="Update Status Tiket" v-if="userAccess == 'Administrator' && ticket.status != 'Closed' && ticket.status != 'Advice Only' " class=updatebtns><i class="fi fi-rr-refresh"></i></a>
                         </h3>
                         <div class=detrequestor>
                             <h4><i class="fi fi-rr-info"></i> Status : <span class="badgee" :class="ticket.status">{{ticket.status}}</span></h4>
                             <h4><i class="fi fi-rr-portrait"></i> {{ticket.requestor}} (Requestor) </h4>
-                            <button @click="showDetailTicket(ticket)">Detail Ticket</button>
+                            <button @click="showDetailTicket(ticket)">Detail Tiket</button>
                         </div>
                     </div>
                 </div>
@@ -150,7 +150,7 @@
                             <td>{{row.status}}
                                 <span></
                             </td>
-                            <td><a @click=showDetailTicket(row)><i class="fi fi-rr-search-alt"></i> <span class=mobile>Lihat Ticket<span> </a></td>
+                            <td><a @click=showDetailTicket(row)><i class="fi fi-rr-search-alt"></i> <span class=mobile>Lihat Tiket<span> </a></td>
                         </tr>
                         <tr v-if=!filteredTickets.length>
                             <td colspan=6>Sorry, no data found.</td>
@@ -164,8 +164,8 @@
             </div>
         </div>
         <div class="content-header updateform" v-if="activeTab == 3">
-            <h2><i class="fi fi-rr-edit"></i> Update Status Ticket</h2>
-            <p class="info blue inlines"><i class="fi fi-rr-info"></i> Anda akan memperbaharui status ticket dengan detail berikut.</p>
+            <h2><i class="fi fi-rr-edit"></i> Update Status Tiket</h2>
+            <p class="info blue inlines"><i class="fi fi-rr-info"></i> Anda akan memperbaharui status tiket dengan detail berikut.</p>
             <div class="carddetailtick">
                 <div class="cardfl">
                     <div class="cardsec">
@@ -270,6 +270,7 @@
                 </form>
             </div>
         </div>
+        <!-- preview detail ticket -->
         <div class="addbox detailout" v-if=showDetail @click.self="showDetail = false">
             <div class="conbox detail">
                 <h2> 
@@ -294,6 +295,66 @@
                             <p>Status Ticket</p>
                             <h4>{{ ticketDetail.status }}</h4>
                         </div>
+                    </div>
+                </div>
+                <!-- detail history -->
+                <div class="detsect">
+                    <h3><span><i class="fi fi-rr-chart-line-up"></i> History Tiket</span></h3>
+                    <div class="contdet flexible">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Tanggal</th>
+                                    <th>Status</th>
+                                    <th>Catatan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-if="ticketDetail.history.close_date != null">
+                                    <td><i class="fi fi-rr-angle-circle-right"></i></td>
+                                    <td>{{ticketDetail.history.close_date}}</td>
+                                    <td>Closed</td>
+                                    <td>{{ticketDetail.history.close_note}}</td>
+                                </tr>
+                                <tr v-if="ticketDetail.history.advice_date != null">
+                                    <td><i class="fi fi-rr-angle-circle-right"></i></td>
+                                    <td>{{ticketDetail.history.advice_date}}</td>
+                                    <td>Advice Only</td>
+                                    <td>{{ticketDetail.history.advice_note}}</td>
+                                </tr>
+                                <tr v-if="ticketDetail.history.progress_date != null" :title="`Nomor SO : ${ticketDetail.history.progress_so} | Teknisi : ${ticketDetail.history.progress_tech} `">
+                                    <td><i class="fi fi-rr-angle-circle-right"></i></td>
+                                    <td>{{ticketDetail.history.progress_date}}</td>
+                                    <td>In Progress Perform</td>
+                                    <td>{{ticketDetail.history.progress_note}}</td>
+                                </tr>
+                                <tr v-if="ticketDetail.history.waittech_date != null" :title="`Nomor SO : ${ticketDetail.history.waittech_so}`">
+                                    <td><i class="fi fi-rr-angle-circle-right"></i></td>
+                                    <td>{{ticketDetail.history.waittech_date}}</td>
+                                    <td>Waiting Technician</td>
+                                    <td>{{ticketDetail.history.waittech_note}}</td>
+                                </tr>
+                                <tr v-if="ticketDetail.history.schedule_date != null" :title="`Nomor SO : ${ticketDetail.history.schedule_so}`">
+                                    <td><i class="fi fi-rr-angle-circle-right"></i></td>
+                                    <td>{{ticketDetail.history.schedule_date}}</td>
+                                    <td>Waiting Schedule Perform</td>
+                                    <td>{{ticketDetail.history.schedule_note}}</td>
+                                </tr>
+                                <tr v-if="ticketDetail.history.quoteapp_date != null" :title="`Nomor SO : ${ticketDetail.history.quoteapp_num} | Teknisi : ${ticketDetail.history.quoteapp_tech}`">
+                                    <td><i class="fi fi-rr-angle-circle-right"></i></td>
+                                    <td>{{ticketDetail.history.quoteapp_date}}</td>
+                                    <td>Waiting Quote Approval / PO</td>
+                                    <td>{{ticketDetail.history.quoteapp_note}}</td>
+                                </tr>
+                                <tr v-if="ticketDetail.history.quote_date != null">
+                                    <td><i class="fi fi-rr-angle-circle-right"></i></td>
+                                    <td>{{ticketDetail.history.quote_date}}</td>
+                                    <td>Waiting Quote</td>
+                                    <td>{{ticketDetail.history.quote_note}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class=detsect>
@@ -322,8 +383,25 @@
                         </div>
                     </div>
                 </div>
+                <div class=detsect v-if="ticketDetail.url_trakindo">
+                    <h3><span><i class="fi fi-rr-document"></i> Dokumen Lampiran</span></h3>
+                    <div class=contdet>
+                        <div class=pesan>
+                            <p>Quote Trakindo</p>
+                            <h4><a target="_blank" title="Lihat dokumen" :href="`../assets/file_admin/${ticketDetail.url_trakindo}`">{{ ticketDetail.url_trakindo }}</a></h4>
+                        </div>
+                        <div class=pesan>
+                            <p>Approval Quote dari User</p>
+                            <form v-if="ticketDetail.url_customer == ''" @submit.prevent="userUploadFile(ticketDetail.id)" class="formuploaduser">
+                                <input type="file" accept="application/pdf" name="files" required >
+                                <button type="submit" title="Upload file"><i class="fi fi-rr-upload"></i></button>
+                            </form>
+                            <h4 v-else><a target="_blank" title="Lihat dokumen" :href="`../assets/file_user/${ticketDetail.url_customer}`">{{ ticketDetail.url_customer }}</a></h4>
+                        </div>
+                    </div>
+                </div>
                 <div class="detsect">
-                    <button v-if="userAccess == 'Administrator'" @click="updateTicket(ticketDetail)" class=btntutup>Update Ticket</button>
+                    <button v-if="userAccess == 'Administrator' && ticketDetail.status != 'Closed' && ticketDetail.status != 'Advice Only' " @click="updateTicket(ticketDetail)" class=btntutup>Update Tiket</button>
                     <button @click="showDetail = false" class=btntutup :class="{line: userAccess == 'Administrator'}">Tutup</button>
                 </div>
             </div>
@@ -395,7 +473,27 @@
                 },
                 showDetailTicket(ticket){
                     this.ticketDetail = ticket
-                    this.showDetail = true
+                    $.ajax({
+                        url: '../controllers/checkDocument.php',
+                        method: 'POST',
+                        data: {id: this.ticketDetail.id},
+                        success: (data) => {
+                            let parsed = JSON.parse(data)
+                            if(parsed.length){
+                                this.ticketDetail.url_trakindo = parsed[0].url_trakindo
+                                this.ticketDetail.url_customer = parsed[0].url_customer
+                            }
+                        }
+                    })
+                    $.ajax({
+                        url: '../controllers/checkTicketHistory.php',
+                        method: 'POST',
+                        data: {id: this.ticketDetail.id},
+                        success: (data) => {
+                            this.ticketDetail.history = JSON.parse(data)[0]
+                            this.showDetail = true
+                        }
+                    })
                 },
                 tableNavClick(nav){
                     if(nav == 'prev'){
@@ -467,7 +565,7 @@
                                         obj.append('ticket_id', this.ticketWillUpdate.id)
                                         // upload file
                                         $.ajax({
-                                            url: '../controllers/UploadFile.php',
+                                            url: '../controllers/uploadFile.php',
                                             data: obj,
                                             method: 'POST',
                                             processData: false,
@@ -491,6 +589,26 @@
                         }
                     })
                     this.updateStatus = ''
+                },
+                userUploadFile(id){
+                    let formData = new FormData(document.querySelector('.formuploaduser'))
+                    formData.append('ticket_id', id)
+                    $.ajax({
+                        url: '../controllers/uploadFileUser.php',
+                        data: formData,
+                        method: 'POST',
+                        processData: false,
+                        contentType: false,
+                        success: () => {
+                            this.ticketDetail = ''
+                            this.showDetail = false
+                            this.showNotifSuccessUpdate = true
+                            window.scrollTo(0,0)
+                            setTimeout(() => {
+                                this.showNotifSuccessUpdate = false
+                            },3000)
+                        }
+                    })
                 }
             },
             computed: {
