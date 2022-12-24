@@ -53,64 +53,70 @@
                 <p v-else class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat mengupdate tiket pada tab <strong>Report</strong> atau pada form <strong>Detail Ticket</strong>.</p>
 
             </div>
-            <a>
-                <h2><i class="fi fi-rr-document-signed"></i> Rangkuman Semua Tiket</h2>
-                <span>Jumlah semua tiket {{ listData.length }} tiket.</span>
-            </a>
-            <div class=sumbox>
-                <div class=eachcontent>
-                    <h1 class=" pad">{{ (listData.filter(item => item.status == 'Created')).length }} <span class="mini">Tiket</span></h1>
-                    <div>
-                        <h3 class=><i class="fi fi-rr-edit colblue"></i> Tiket Baru <span v-if="userAccess != 'Administrator'">Dibuat</span></h3>
-                        <p>Total semua tiket yang dibuat.</p>
-                        <button class=review @click="ticketSummary('Created')">Lihat Tiket</button>
+            <div class="sections">
+                <a>
+                    <h2><i class="fi fi-rr-document-signed"></i> Rangkuman Semua Tiket</h2>
+                    <span>Jumlah semua tiket {{ listData.length }} tiket.</span>
+                </a>
+                <div class=sumbox>
+                    <div class=eachcontent>
+                        <h1 class=" pad">{{ (listData.filter(item => item.status == 'Created')).length }} <span class="mini">Tiket</span></h1>
+                        <div>
+                            <h3 class=><i class="fi fi-rr-edit colblue"></i> Tiket Baru <span v-if="userAccess != 'Administrator'">Dibuat</span></h3>
+                            <p>Total semua tiket yang dibuat.</p>
+                            <button class=review @click="ticketSummary('Created')">Lihat Tiket</button>
+                        </div>
                     </div>
-                </div>
-                <div class=eachcontent>
-                    <h1 class="pad">{{ (listData.filter(item => item.status != 'Created' && item.status != 'Closed')).length }} <span class="mini">Tiket</span></h1>
-                    <div>
-                        <h3 class=><i class="fi fi-rr-rotate-right colwarn"></i> Tiket On Progress</h3>
-                        <p>Total tiket berlangsung / on-progress</p>
-                        <button class=review @click="ticketSummary('Process')">Lihat Tiket</button>
+                    <div class=eachcontent>
+                        <h1 class="pad">{{ (listData.filter(item => item.status != 'Created' && item.status != 'Closed')).length }} <span class="mini">Tiket</span></h1>
+                        <div>
+                            <h3 class=><i class="fi fi-rr-rotate-right colwarn"></i> Tiket On Progress</h3>
+                            <p>Total tiket berlangsung / on-progress</p>
+                            <button class=review @click="ticketSummary('Process')">Lihat Tiket</button>
+                        </div>
                     </div>
-                </div>
-                <div class=eachcontent>
-                    <h1 class=" pad">{{ (listData.filter(item => item.status == 'Closed' || item.status == 'Advice Only')).length }} <span class="mini">Tiket</span></h1>
-                    <div>
-                        <h3 class=><i class="fi fi-rr-checkbox colgreen"></i> Tiket Selesai</h3>
-                        <p>Total tiket dengan status selesai.</p>
-                        <button class=review @click="ticketSummary('Completed')">Lihat Tiket</button>
+                    <div class=eachcontent>
+                        <h1 class=" pad">{{ (listData.filter(item => item.status == 'Closed' || item.status == 'Advice Only')).length }} <span class="mini">Tiket</span></h1>
+                        <div>
+                            <h3 class=><i class="fi fi-rr-checkbox colgreen"></i> Tiket Selesai</h3>
+                            <p>Total tiket dengan status selesai.</p>
+                            <button class=review @click="ticketSummary('Completed')">Lihat Tiket</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <a>
-                <h2><i class="fi fi-rr-ticket trans"></i> Tiket Terakhir Dibuat</h2>
-                <span>Menampilkan 5 tiket yang terakhir dibuat.</span>
-            </a>
-            <div class=lastticket>
-                <div class=singleticket v-for="ticket in lastCreatedTicket" :key="ticket.id">
-                    <h3>
-                        <i class="fi fi-rr-ticket"></i>
-                        <span class=rightinfo>
-                            <span> ID {{ticket.id}} - {{ticket.sn_unit}}</span>
-                            <span>Dibuat pada {{(new Date(ticket.req_date)).toLocaleDateString('id-ID')}}</span>
-                        </span>
-                        <a @click="updateTicket(ticket)" title="Update Status Tiket" v-if="userAccess == 'Administrator'" class=updatebtns><i class="fi fi-rr-refresh"></i></a>
-                    </h3>
-                    <div class=detrequestor>
-                        <h4><i class="fi fi-rr-info"></i> Status : <span class="badgee" :class="ticket.status">{{ticket.status}}</span></h4>
-                        <h4><i class="fi fi-rr-portrait"></i> {{ticket.requestor}} (Requestor) </h4>
-                        <button @click="showDetailTicket(ticket)">Detail Ticket</button>
+            <div class="sections">
+                <a>
+                    <h2><i class="fi fi-rr-ticket trans"></i> Tiket Terakhir Dibuat</h2>
+                    <span>Menampilkan 5 tiket yang terakhir dibuat.</span>
+                </a>
+                <div class=lastticket>
+                    <div class=singleticket v-for="ticket in lastCreatedTicket" :key="ticket.id">
+                        <h3>
+                            <i class="fi fi-rr-ticket"></i>
+                            <span class=rightinfo>
+                                <span> ID {{ticket.id}} - {{ticket.sn_unit}}</span>
+                                <span>Dibuat pada {{(new Date(ticket.req_date)).toLocaleDateString('id-ID')}}</span>
+                            </span>
+                            <a @click="updateTicket(ticket)" title="Update Status Tiket" v-if="userAccess == 'Administrator'" class=updatebtns><i class="fi fi-rr-refresh"></i></a>
+                        </h3>
+                        <div class=detrequestor>
+                            <h4><i class="fi fi-rr-info"></i> Status : <span class="badgee" :class="ticket.status">{{ticket.status}}</span></h4>
+                            <h4><i class="fi fi-rr-portrait"></i> {{ticket.requestor}} (Requestor) </h4>
+                            <button @click="showDetailTicket(ticket)">Detail Ticket</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class=content-header v-if="activeTab == 2">
-            <a>
-                <h2><i class="fi fi-rr-document-signed"></i> Monitoring Semua Tiket</h2>
-                <span>Menampilkan total tiket <strong>{{ filteredTickets.length > 10 ? '10' : filteredTickets.length }}</strong> dari total <strong>{{ listData.length }}</strong> tiket.</span>
-            </a>
-            <p class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat melihat detail tiket dengan klik pada baris tiket atau <strong>Lihat Tiket</strong> pada kolom Action.</p>
+            <div class="sections nomar">
+                <a>
+                    <h2><i class="fi fi-rr-document-signed"></i> Monitoring Semua Tiket</h2>
+                    <span>Menampilkan total tiket <strong>{{ filteredTickets.length > 10 ? '10' : filteredTickets.length }}</strong> dari total <strong>{{ listData.length }}</strong> tiket.</span>
+                </a>
+                <p class="info blue inline"><i class="fi fi-rr-info"></i> Anda dapat melihat detail tiket dengan klik pada baris tiket atau <strong>Lihat Tiket</strong> pada kolom Action.</p>
+            </div>
             <div class=searchbox>
                 <form style="position: relative">
                     <select v-model="criteriaSearch" @change=handleChangeSelect>
@@ -208,7 +214,7 @@
                             <option value="Closed">Closed</option>
                         </select>
                     </div>
-                    <div class="formsec nopad" v-if="updateStatus != 'Advice Only' && updateStatus != 'Waiting Quote' && updateStatus != 'Closed' ">
+                    <div class="formsec nopad" v-if="updateStatus != 'Advice Only' && updateStatus != 'Waiting Quote' && updateStatus != 'Closed' && updateStatus != ''">
                         <label>No Quote/ SO</label>
                         <input type="text" name="quotenumber" placeholder="Ketik nomor quote/so ...">
                     </div>

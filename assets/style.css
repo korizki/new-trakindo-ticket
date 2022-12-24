@@ -136,12 +136,18 @@ a{
 .logoffbtn:hover{
     background: rgb(247,247,247);
 }
+.sections{
+    margin-top: 3em;
+}
+.nomar{
+    margin-top: 0px;
+}
 .content-header{
     width: 80%;
     margin-left: 10%;
     padding: 16px 0;
 }
-.content-header>a{
+.content-header>div>a{
     display: flex;
     justify-content: space-between;
     align-items: center;

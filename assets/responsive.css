@@ -90,7 +90,7 @@
         border-radius: 4px;
         margin-top: 8px;
     }
-    .content-header>a>span{
+    .content-header>div>a>span{
         display: none;
     }
     .topnav{
