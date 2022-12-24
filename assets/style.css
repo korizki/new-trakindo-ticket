@@ -43,7 +43,7 @@ body{
     opacity: 0.8;
 }
 .formsec>input, .formsec>textarea, .formsec>button, .formsec>select{
-    background: rgb(253,253,253);
+    /* background: rgb(253,253,253); */
     resize: none;
     font-size: 1em;
     padding: 0.7em 0.9em;
@@ -382,11 +382,11 @@ a{
     font-size: 0.8em;
     border-radius: 4px;
 }
-.Closed{
+.Closed, .Advice{
     color: limegreen;
     background: rgb(242, 255, 242);
 }
-.Waiting{
+.Waiting, .In{
     color: orange;
     background: rgb(255, 251, 242);
 }

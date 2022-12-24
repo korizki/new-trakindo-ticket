@@ -37,6 +37,10 @@
             <span><i class="fi fi-rr-badge-check"></i> <strong>Request Tiket berhasil</strong>, silahkan tunggu Feedback / Balasan tiket. Terima kasih.</span>
             <a @click="showNotifSuccess = false"><i class="fi fi-rr-cross-small"></i></a>
         </p>
+        <p class=notifsuccess v-if="showNotifSuccessUpdate">
+            <span><i class="fi fi-rr-badge-check"></i> <strong>Tiket berhasil diupdate.</strong>, Terima kasih.</span>
+            <a @click="showNotifSuccess = false"><i class="fi fi-rr-cross-small"></i></a>
+        </p>
         <div class=topnav v-if="ticketWillUpdate == ''">
             <a :class="{activetab: activeTab == 1}" @click="activeTab = 1"><i class="fi fi-rr-stats" v-if="activeTab == 1"></i> Summary</a>
             <a :class="{activetab: activeTab == 2}" @click="activeTab = 2"><i class="fi-rr-document-signed" v-if="activeTab == 2"></i> Report</a>
@@ -71,7 +75,7 @@
                     </div>
                 </div>
                 <div class=eachcontent>
-                    <h1 class=" pad">{{ (listData.filter(item => item.status == 'Closed')).length }} <span class="mini">Tiket</span></h1>
+                    <h1 class=" pad">{{ (listData.filter(item => item.status == 'Closed' || item.status == 'Advice Only')).length }} <span class="mini">Tiket</span></h1>
                     <div>
                         <h3 class=><i class="fi fi-rr-checkbox colgreen"></i> Tiket Selesai</h3>
                         <p>Total tiket dengan status selesai.</p>
@@ -204,17 +208,17 @@
                             <option value="Closed">Closed</option>
                         </select>
                     </div>
-                    <div class="formsec nopad" v-if="updateStatus != 'Advice Only'" v-if="updateStatus != 'Waiting Quote'" v-if="updateStatus != 'Closed'">
+                    <div class="formsec nopad" v-if="updateStatus != 'Advice Only' && updateStatus != 'Waiting Quote' && updateStatus != 'Closed' ">
                         <label>No Quote/ SO</label>
-                        <input type="text" name="quotenumber">
+                        <input type="text" name="quotenumber" placeholder="Ketik nomor quote/so ...">
                     </div>
                     <div class="formsec nopad" v-if="updateStatus == 'Waiting Quote Approval / PO' || updateStatus == 'In Progress Perform'">
                         <label>Nama Teknisi</label>
-                        <input type="text" name="teknisi">
+                        <input type="text" name="teknisi" placeholder="Ketik nama teknisi ...">
                     </div>
                     <div class="formsec nopad">
                         <label>Catatan Tambahan</label>
-                        <input type="text" name="note">
+                        <input type="text" name="note" placeholder ="Ketik catatan tambahan ...">
                     </div>
                     <div class="upform nopad nopad-btn">
                         <a @click="cancelUpdate">Batal</a>
@@ -331,6 +335,7 @@
                     user: '',
                     company: '',
                     showNotifSuccess: false,
+                    showNotifSuccessUpdate: false,
                     ticketDetail: '',
                     showDetail: false,
                     activeTab: 1,
@@ -444,14 +449,16 @@
                                 data: obj,
                                 method: 'POST',
                                 success: () => {
-                                    alert('Berhasil update ticket.')
+                                    this.activeTab = 1
+                                    window.scrollTo(0,0)
+                                    this.ticketWillUpdate = ''
+                                    this.showNotifSuccessUpdate = true
                                     setTimeout(() => {
-                                        this.activeTab = 1
-                                        this.getDataFromAPI()
-                                    },500)
+                                        this.showNotifSuccessUpdate = false
+                                    },3000)
+                                    this.getDataFromAPI()
                                 }
                             })
-                            console.log(obj)
                         }
                     })
                 }
